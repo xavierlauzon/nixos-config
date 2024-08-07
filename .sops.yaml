@@ -1,13 +1,19 @@
 keys:
   - &user_xavier age1c68qgdn67fm244dzevutpz7kxy0g7dds2kdd5pcmxguv9yfyvqsqvj5h8y
+  - &host_xavierdesktop age1ca3msprfg6cesmg05q5hpak2tazhelv47etz76mkmh9yssatlyuq6uwnwu
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
       - age:
           - *user_xavier
-
+          - *host_xavierdesktop
   - path_regex: users/secrets.yaml
     key_groups:
       - age:
           - *user_xavier
-
+          - *host_xavierdesktop
+  - path_regex: hosts/xavierdesktop/secrets/.*
+    key_groups:
+      - age:
+          - *host_xavierdesktop
+          - *user_xavier
