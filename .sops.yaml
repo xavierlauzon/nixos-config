@@ -1,6 +1,5 @@
 keys:
-
-  - &user_xavier
+  - &user_xavier age1c68qgdn67fm244dzevutpz7kxy0g7dds2kdd5pcmxguv9yfyvqsqvj5h8y
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
