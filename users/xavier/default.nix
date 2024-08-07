@@ -5,20 +5,20 @@ in
   with lib;
 {
   options = {
-    host.user.ireen = {
+    host.user.xavier = {
       enable = mkOption {
         default = false;
         type = with types; bool;
-        description = "Enable Ireen";
+        description = "Enable Xavier";
       };
     };
   };
 
-  config = mkIf config.host.user.ireen.enable {
-    users.users.ireen = {
+  config = mkIf config.host.user.xavier.enable {
+    users.users.xavier = {
       isNormalUser = true;
       shell = pkgs.bashInteractive;
-      uid = 4242;
+      uid = 4236;
       group = "users" ;
       extraGroups = [
         "wheel"
@@ -26,20 +26,25 @@ in
         "audio"
       ] ++ ifTheyExist [
         "adbusers"
+        "deluge"
+        "dialout"
         "docker"
         "git"
         "input"
+        "libvirtd"
         "lp"
+        "mysql"
         "network"
+        "podman"
       ];
 
       openssh.authorizedKeys.keys = [ (builtins.readFile ./ssh.pub) ];
-      hashedPasswordFile = config.sops.secrets.ireen-password.path;
+      hashedPasswordFile = mkDefault config.sops.secrets.xavier-password.path;
     };
 
-    sops.secrets.ireen-password = {
-      sopsFile = ../secrets.yaml;
-      neededForUsers = true;
+    sops.secrets.xavier-password = {
+      sopsFile = mkDefault ../secrets.yaml;
+      neededForUsers = mkDefault true;
     };
   };
 }
