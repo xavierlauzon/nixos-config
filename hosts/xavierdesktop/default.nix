@@ -22,6 +22,10 @@
     };
     network = {
       hostname = "xavierdesktop";
+      wired = {
+       enable = true;
+       type = "dynamic";
+};
     };
     role = "server";
     user = {
