@@ -15,5 +15,6 @@ creation_rules:
   - path_regex: hosts/xavierdesktop/secrets/.*
     key_groups:
       - age:
-          - *host_xavierdesktop
           - *user_xavier
+          - *host_xavierdesktop
+

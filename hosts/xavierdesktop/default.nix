@@ -10,12 +10,12 @@
     feature = {
       appimage.enable = true;
       gaming = {
-        gamemode.enable = false;
-        gamescope.enable = false;
-        heroic.enable = false;
+        gamemode.enable = true;
+        gamescope.enable = true;
+        heroic.enable = true;
         steam = {
-          enable = false;
-          protonGE = false;
+          enable = true;
+          protonGE = true;
         };
       };
       graphics = {
@@ -49,6 +49,7 @@
       wired = {
        enable = true;
        type = "dynamic";
+       mac = "f0:2f:74:17:2c:c2";
       };
     };
     role = "desktop";
