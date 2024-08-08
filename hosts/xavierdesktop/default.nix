@@ -39,6 +39,7 @@
     hardware = {
       cpu = "amd";
       gpu = "amd";
+      keyboard.enable = true; 
       raid.enable = false;  
       sound = {
         server = "pipewire";
