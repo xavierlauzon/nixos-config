@@ -34,7 +34,7 @@
     role = "desktop";
     user = {
       root.enable = true;
-      dave.enable = true;
+      xavier.enable = true;
     };
   };
 }
