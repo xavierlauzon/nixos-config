@@ -70,7 +70,7 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
-        xavierdesktop = lib.nixosSystem { # Server Added 2024-08-07 
+        xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07 
           modules = [ ./hosts/xavierdesktop ];
           specialArgs = { inherit inputs outputs; };
         };
