@@ -25,9 +25,10 @@ in {
       rocmPackages.clr
       rocmPackages.clr.icd
     ];
+    hardware.amdgpu.initrd.enable = lib.mkDefault true;
 
     services.xserver.videoDrivers = [
-      "amdgpu"
+      "modesetting"
     ];
   };
 }
