@@ -18,7 +18,14 @@
           protonGE = true;
         };
       };
-
+      boot = {
+        kernel = {
+          parameters = [
+            "quiet"
+            "video=DP-2:7680x2160@240"
+          ];
+        };
+      };
       graphics = {
         enable = true;
         backend = "wayland";
@@ -35,14 +42,6 @@
       impermanence.enable = false;               # This line can be removed if not needed as it is already default set by the role template
       swap = {
         partition = "disk/by-partlabel/swap";
-      };
-    };
-    boot = {
-      kernel = {
-        parameters = [
-          "quiet"
-          "video=DP-2:7680x2160@240"
-        ];
       };
     };
     hardware = {
