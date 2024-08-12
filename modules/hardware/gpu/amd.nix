@@ -20,12 +20,18 @@ in {
       "amdgpu.sg_display=0"
     ];
 
+    host.feature.boot.kernel.modules = mkIf (device.gpu == "amd") [
+      "amdgpu"
+    ];
+
     hardware.graphics.extraPackages = with pkgs; [
       amdvlk
       rocmPackages.clr
       rocmPackages.clr.icd
     ];
-    hardware.amdgpu.initrd.enable = lib.mkDefault true;
+
+    hardware.amdgpu.initrd.enable = true;
+    hardware.amdgpu.amdvlk.enable = true;
 
     services.xserver.videoDrivers = [
       "modesetting"
