@@ -8,5 +8,6 @@ with lib;
     ./hostname.nix
     ./vpn
     ./wired.nix
+    ./bridge.nix
   ];
 }

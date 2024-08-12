@@ -18,6 +18,7 @@
           protonGE = true;
         };
       };
+
       graphics = {
         enable = true;
         backend = "wayland";
@@ -36,11 +37,19 @@
         partition = "disk/by-partlabel/swap";
       };
     };
+    boot = {
+      kernel = {
+        parameters = [
+          "quiet"
+          "video=DP-2:7680x2160@240"
+        ];
+      };
+    };
     hardware = {
       cpu = "amd";
       gpu = "amd";
-      keyboard.enable = true; 
-      raid.enable = false;  
+      keyboard.enable = true;
+      raid.enable = false;
       sound = {
         server = "pipewire";
       };

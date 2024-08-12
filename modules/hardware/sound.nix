@@ -254,7 +254,7 @@ in
       };
       server = mkOption {
         type = types.str;
-        default = "pulseaudio";
+        default = "pipewire";
         description = "Which sound server (pulseaudio/pipewire)";
       };
     };
@@ -267,14 +267,41 @@ in
       ];
     };
 
-    hardware.pulseaudio = mkIf (cfg.enable && cfg.server == "pulseaudio") {
-      enable = true;
-    };
+    # 24.11 - This whole section is due to be removed
+    sound = lib.mkMerge [
+      (lib.mkIf (cfg.enable && cfg.server == "pulseaudio") {
+        enable = mkForce true;
+      })
+
+      (lib.mkIf (cfg.enable && cfg.server == "pipewire") {
+        enable = mkForce false;
+      })
+
+     (lib.mkIf (! cfg.enable ) {
+        enable = false;
+      })
+    ];
+
+    hardware.pulseaudio = lib.mkMerge [
+      (lib.mkIf (cfg.enable && cfg.server == "pulseaudio") {
+        enable = mkForce true;
+      })
+
+      (lib.mkIf (cfg.enable && cfg.server == "pipewire") {
+        enable = mkForce false;
+      })
+
+     (lib.mkIf (! cfg.enable ) {
+        enable = false;
+      })
+    ];
 
     services.pipewire = mkIf (cfg.enable && cfg.server == "pipewire") {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
+      enable = mkForce true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
       pulse.enable = true;
       wireplumber = {
         enable = true;
