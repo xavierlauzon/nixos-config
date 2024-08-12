@@ -28,12 +28,13 @@ in {
         enable = mkDefault true;
       };
 
+      libinput.enable = mkDefault true;
+
       xserver = {
         enable = mkDefault true;
         desktopManager = {
           xterm.enable = mkDefault false;
         };
-        libinput.enable = mkDefault true;
         xkb.layout = mkDefault "us";
       };
     };
