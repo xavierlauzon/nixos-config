@@ -30,8 +30,22 @@ in {
       rocmPackages.clr.icd
     ];
 
-    hardware.amdgpu.initrd.enable = true;
-    hardware.amdgpu.amdvlk.enable = true;
+    hardware.amdgpu = {
+        initrd.enable = true;
+        opencl.enable = true;
+        amdvlk = {
+            enable = true;
+            supportExperimental.enable = true;
+            support32Bit.enable = true;
+        };
+    };
+
+    environment.systemPackages = with pkgs; [
+      amdvlk
+      driversi686Linux.amdvlk
+      mesa
+      driversi686Linux.mesa
+    ];
 
     services.xserver.videoDrivers = [
       "modesetting"
