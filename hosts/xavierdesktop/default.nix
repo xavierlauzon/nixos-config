@@ -22,7 +22,7 @@
         kernel = {
           parameters = [
             "quiet"
-            "video=DP-2:7680x2160@240"
+            "video=DP-3:7680x2160@240"
           ];
         };
       };
