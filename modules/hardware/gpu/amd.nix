@@ -28,6 +28,8 @@ in {
       amdvlk
       rocmPackages.clr
       rocmPackages.clr.icd
+      rocmPackages.rocminfo
+      rocmPackages.rocm-runtime
     ];
 
     hardware.amdgpu = {
