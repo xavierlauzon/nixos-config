@@ -24,6 +24,9 @@
             "quiet"
             "video=DP-3:7680x2160@240"
           ];
+          modules = [
+            "v4l2loopback"
+          ];
         };
       };
       graphics = {
@@ -67,4 +70,7 @@
       xavier.enable = true;
     };
   };
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+     v4l2loopback.out
+  ];
 }
