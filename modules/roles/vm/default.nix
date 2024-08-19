@@ -29,6 +29,11 @@ in
         powermanagement = {
           enable = mkDefault true;
         };
+        virtualization = {
+          docker = {
+            enable = mkDefault true;
+          };
+        };
       };
       filesystem = {
         btrfs.enable = mkDefault true;
@@ -55,7 +60,8 @@ in
         yubikey.enable = mkDefault false;
       };
       network = {
-        firewall.fail2ban.enable = mkDefault false;
+        firewall.fail2ban.enable = mkDefault true;
+        wired.enable = mkDefault true;
       };
       service = {
         logrotate.enable = mkDefault true;
@@ -68,8 +74,9 @@ in
 
     networking = {
       networkmanager= {
-        enable = mkDefault true;
+        enable = mkDefault false;
       };
+
     };
 
     services.qemuGuest.enable = mkDefault true;        # Make the assumption we're using QEMU
