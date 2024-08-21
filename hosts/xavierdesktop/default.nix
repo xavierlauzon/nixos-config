@@ -17,6 +17,8 @@
           enable = true;
           protonGE = true;
         };
+        lutris.enable = true;
+
       };
       boot = {
         kernel = {
