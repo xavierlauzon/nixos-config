@@ -6,6 +6,5 @@
     ./gamescope
     ./heroic
     ./steam
-    ./lutris
   ];
 }
