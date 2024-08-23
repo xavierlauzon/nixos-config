@@ -63,6 +63,15 @@
        type = "dynamic";
        mac = "f0:2f:74:17:2c:c2";
       };
+      vpn = {
+        zerotier = {
+          enable = true;
+          networks = [
+            "e5cd7a9e1cfbc9a8"
+          ];
+          port = 9993;
+        };
+      };
     };
     role = "desktop";
     user = {

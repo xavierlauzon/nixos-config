@@ -27,6 +27,15 @@
        type = "dynamic";
        mac = "58:47:ca:78:27:ab";
       };
+      vpn = {
+        zerotier = {
+          enable = true;
+          networks = [
+            "e5cd7a9e1cfbc9a8"
+          ];
+          port = 9993;
+        };
+      };
 
     };
     role = "server";
