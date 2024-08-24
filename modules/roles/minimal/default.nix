@@ -12,7 +12,7 @@ in
     host = {
       feature = {
         boot = {
-          efi.enable = mkDefault false;
+          efi.enable = mkDefault true;
           graphical.enable = mkDefault false;
         };
         fonts = {
