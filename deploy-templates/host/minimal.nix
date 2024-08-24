@@ -23,6 +23,7 @@
     role = "minimal";
     user = {
       root.enable = true;
+      xavier.enable = true;
     };
   };
 }
