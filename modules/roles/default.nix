@@ -9,6 +9,7 @@ with lib;
     ./minimal
     ./server
     ./vm
+    ./darwin
   ];
 
   options = {
@@ -21,6 +22,7 @@ with lib;
         "minimal"   # Bare bones
         "server"    #
         "vm"        # Some sort of virtual machine, that may have a combo of desktop or laptop
+        "darwin"    # nix-darwin compatible role for nix on MacOS 
       ];
     };
   };

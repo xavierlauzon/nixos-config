@@ -19,9 +19,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -44,7 +49,7 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-darwin, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib;
@@ -68,6 +73,13 @@
       overlays = import ./overlays {inherit inputs;};
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
+
+#      darwinConfigurations = {
+#        xaviermacbook = darwin.lib.darwinSystem {
+#          modules = [ ./hosts/xaviermacbook ];
+#          specialArgs = { inherit inputs outputs; };
+#        };
+#      };
 
       nixosConfigurations = {
         blackhawk = lib.nixosSystem { # Server Added 2024-08-23 
