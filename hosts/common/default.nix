@@ -7,7 +7,7 @@
     ../../users
   ] ++ (builtins.attrValues outputs.nixosModules);
 
-  boot = mkIf pkgs.system == "x86_64-linux" {
+  boot = {
     initrd = {
       systemd = {
         strip = mkDefault true;                         # Saves considerable space in initrd
