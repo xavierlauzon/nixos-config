@@ -32,9 +32,7 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    };
+
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -47,6 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-darwin, ... }@inputs:
@@ -82,12 +81,12 @@
 #      };
 
       nixosConfigurations = {
-        blackhawk = lib.nixosSystem { # Server Added 2024-08-23 
+        blackhawk = lib.nixosSystem { # Server Added 2024-08-23
           modules = [ ./hosts/blackhawk ];
           specialArgs = { inherit inputs outputs; };
         };
 
-        xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07 
+        xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07
           modules = [ ./hosts/xavierdesktop ];
           specialArgs = { inherit inputs outputs; };
         };
