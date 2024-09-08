@@ -7,4 +7,5 @@
   host-network = import ./network;
   host-role = import ./roles/default.nix;
   host-service = import ./service;
+  host-darwin = import ./darwin;
 }
