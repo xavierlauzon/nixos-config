@@ -24,7 +24,7 @@ in
         "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
       };
       extraPortals = [
-        pkgs.xdg-desktop-portal-hyprland
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
         pkgs.xdg-desktop-portal-gtk
       ];
     };
