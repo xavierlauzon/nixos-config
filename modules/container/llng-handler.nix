@@ -68,7 +68,7 @@ in
         "/var/local/data/_system/${container_name}/logs:/www/logs"
       ];
       environment = {
-        "TIMEZONE" = "America/Vancouver";
+        "TIMEZONE" = "America/Toronto";
         "CONTAINER_NAME" = "${hostname}-${container_name}";
         "CONTAINER_ENABLE_MONITORING" = cfg.monitor;
         "CONTAINER_ENABLE_LOGSHIPPING" = cfg.logship;

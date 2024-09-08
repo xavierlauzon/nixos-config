@@ -15,7 +15,7 @@ in
     };
   };
 
-  system = mkIf cfg.enable {
+  config.system = mkIf cfg.enable {
 
     activationScripts.postUserActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,

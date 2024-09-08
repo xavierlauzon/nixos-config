@@ -66,7 +66,7 @@ in
         "/mnt/s3ql:/data:shared"
       ];
       environment = {
-        "TIMEZONE" = "America/Vancouver";
+        "TIMEZONE" = "America/Toronto";
         "CONTAINER_NAME" = "${hostname}-${container_name}";
         "CONTAINER_ENABLE_MONITORING" = cfg.monitor;
         "CONTAINER_ENABLE_LOGSHIPPING" = cfg.logship;
