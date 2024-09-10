@@ -60,7 +60,9 @@
       hostname = "xavierdesktop";
       wired = {
        enable = true;
-       type = "dynamic";
+       type = "static";
+       ip = "192.168.2.10/22";
+       gateway = "192.168.0.1";
        mac = "f0:2f:74:17:2c:c2";
       };
       vpn = {
@@ -82,4 +84,5 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
      v4l2loopback.out
   ];
+  networking.nameservers = [ "192.168.1.215" ];
 }
