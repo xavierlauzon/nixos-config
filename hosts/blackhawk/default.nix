@@ -24,7 +24,9 @@
       hostname = "blackhawk";
       wired = {
        enable = true;
-       type = "dynamic";
+       type = "static";
+       ip = "192.168.1.215/22";
+       gateway = "192.168.0.1";
        mac = "58:47:ca:78:27:ab";
       };
       vpn = {
@@ -36,7 +38,9 @@
           port = 9993;
         };
       };
-
+      firewall = {
+        opensnitch.enable = false;
+      };
     };
     role = "server";
     user = {
@@ -44,4 +48,7 @@
       xavier.enable = true;
     };
   };
+  networking.firewall.enable = false;
+  networking.nameservers = [ "127.0.0.1" ];
+  services.resolved.extraConfig = "DNSStubListener=no";
 }
