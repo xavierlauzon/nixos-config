@@ -84,5 +84,5 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
      v4l2loopback.out
   ];
-  networking.nameservers = [ "192.168.1.215" "1.1.1.1" ];
+  networking.nameservers = [ "192.168.1.215" ];
 }
