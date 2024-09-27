@@ -62,6 +62,7 @@
     };
     network = {
       domainname = mkDefault "xavierlauzon.com";
+      domainsearch = mkDefault [ "xavierlauzon.com" ];
     };
     service = {
       logrotate = {
