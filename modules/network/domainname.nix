@@ -14,6 +14,11 @@ in
       default = "null";
       description = "Domain name of system";
     };
+    host.network.domainsearch = mkOption {
+      type = types.listOf types.str;
+      default = "null";
+      description = "Domain name of system";
+    };
   };
 
   config = {
@@ -26,6 +31,7 @@ in
 
     networking = {
       domain = config.host.network.domainname;
+      search = config.host.network.domainsearch;
     };
   };
 }
