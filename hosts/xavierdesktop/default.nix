@@ -13,10 +13,7 @@
         gamemode.enable = true;
         gamescope.enable = true;
         heroic.enable = true;
-        steam = {
-          enable = true;
-          protonGE = true;
-        };
+        steam.enable = true;
       };
       boot = {
         kernel = {
