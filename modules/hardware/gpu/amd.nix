@@ -25,29 +25,24 @@ in {
     ];
 
     hardware.graphics.extraPackages = with pkgs; [
-      amdvlk
+      libva
       rocmPackages.clr
       rocmPackages.clr.icd
       rocmPackages.rocminfo
       rocmPackages.rocm-runtime
     ];
 
+    hardware.enableRedistributableFirmware = true;
+
     hardware.amdgpu = {
         initrd.enable = true;
         opencl.enable = true;
-        amdvlk = {
-            enable = true;
-            supportExperimental.enable = true;
-            support32Bit.enable = true;
-        };
+#        amdvlk = {
+#            enable = false;
+#            supportExperimental.enable = true;
+#            support32Bit.enable = true;
+ #       };
     };
-
-    environment.systemPackages = with pkgs; [
-      amdvlk
-      driversi686Linux.amdvlk
-      mesa
-      driversi686Linux.mesa
-    ];
 
     services.xserver.videoDrivers = [
       "modesetting"
