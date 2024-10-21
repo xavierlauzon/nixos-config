@@ -62,6 +62,8 @@
        gateway = "192.168.0.1";
        mac = "f0:2f:74:17:2c:c2";
       };
+      bridge.enable = true;
+      bridge.interfaces = [ "enp6s0" ];
       vpn = {
         zerotier = {
           enable = true;
