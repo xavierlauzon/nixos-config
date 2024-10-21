@@ -2,6 +2,7 @@
 
 let
   cfg = config.host.network.wired;
+  bridgecfg = config.host.network.bridge;
   defaultIP =
   if ((cfg.ip == "0.0.0.0/0") && (cfg.type == "static"))
   then true
@@ -79,28 +80,41 @@ in
         enable = true;
         networks = {
           "${config.host.network.hostname}" = {
-             networkConfig.DHCP = mkIf (cfg.type == "dynamic") "yes";
-             matchConfig.MACAddress = cfg.mac ;
-             address = mkIf (cfg.type == "static") [
-               cfg.ip
-             ];
-             #dns = mkIf (cfg.type == "static") [ ## TODO FIX THIS
-             #  "1.1.1.1"
-             #  "1.0.0.1"
-             #];
-             #dns = mkIf (cfg.type == "static") [
+            networkConfig = lib.optionalAttrs (cfg.type == "dynamic") {
+              DHCP="yes";
+            } // lib.optionalAttrs (bridgecfg.enable) {
+              IPv4Forwarding = "yes";
+            };
+
+            matchConfig = lib.optionalAttrs (!bridgecfg.enable) {
+              MACAddress = cfg.mac;
+            } // lib.optionalAttrs (bridgecfg.enable) {
+              Name = bridgecfg.name;
+            };
+
+            linkConfig = lib.optionalAttrs (cfg.type == "static") {
+              RequiredForOnline = "routable";
+            } // lib.optionalAttrs (bridgecfg.enable) {
+              MACAddress=cfg.mac;
+            };
+
+            address = mkIf (cfg.type == "static") [
+              cfg.ip
+            ];
+
+            #dns = mkIf (cfg.type == "static") [ ## TODO FIX THIS
+            #  "1.1.1.1"
+            #  "1.0.0.1"
+            #];
+            #dns = mkIf (cfg.type == "static") [
 #
-             #] ++ cfg.dns ;
-             routes = mkIf (cfg.type == "static") [
-               {
-                 routeConfig = {
-                   Gateway = cfg.gateway;
-                   GatewayOnLink = true;
-                 };
-               }
-             ];
-             linkConfig.RequiredForOnline = mkIf (cfg.type == "static") "routable" ;
-           };
+            #] ++ cfg.dns ;
+
+            routes = mkIf (cfg.type == "static") [{
+                Gateway = cfg.gateway;
+                GatewayOnLink = true;
+            }];
+          };
         };
       };
     };

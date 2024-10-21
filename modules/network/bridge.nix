@@ -2,6 +2,7 @@
 
 let
   cfg = config.host.network.bridge;
+  wiredcfg = config.host.network.wired;
 in
   with lib;
 {
@@ -33,25 +34,26 @@ in
       network = {
         enable = true;
         netdevs = {
-            "20-${cfg.name}" = {
-              netdevConfig = {
-                Kind = "bridge";
-                Name = "br0";
-              };
+          "20-${cfg.name}" = {
+            netdevConfig = {
+              Kind = "bridge";
+              Name = cfg.name;
+              MACAddress = wiredcfg.mac;
             };
+          };
+
         };
 
-        networks =
-          let
-            fn = ifnames: o: listToAttrs (map (ifn: lib.nameValuePair "10-${ifn}" o) ifnames);
-          in
-            fn [ cfg.interfaces ] {
-              matchConfig.Name = "${n}";
-              networkConfig.Bridge = "${cfg.name}";
-              linkConfig = {
-                RequiredForOnline = "enslaved";
-              };
-        };
+        networks = let
+          fn = ifnames: o: listToAttrs (map (ifn: lib.nameValuePair "10-${ifn}" (o ifn)) ifnames);
+        in
+          fn cfg.interfaces (ifn: {
+            matchConfig.Name = ifn;
+            networkConfig.Bridge = cfg.name;
+            linkConfig = {
+              RequiredForOnline = "enslaved";
+            };
+          });
       };
     };
   };
