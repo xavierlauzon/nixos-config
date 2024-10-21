@@ -29,6 +29,10 @@
        gateway = "192.168.0.1";
        mac = "58:47:ca:78:27:ab";
       };
+      bridge = {
+        enable = true;
+        interfaces = [ "enp3s0" ];
+      };
       vpn = {
         zerotier = {
           enable = true;
