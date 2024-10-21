@@ -88,7 +88,7 @@ in
 
     networking = {
       networkmanager= {
-        enable = mkDefault true;
+        enable = mkDefault false;
       };
     };
  };
