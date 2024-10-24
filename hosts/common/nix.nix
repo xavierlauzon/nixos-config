@@ -31,7 +31,7 @@
       warn-dirty = false;
     };
 
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.latest;
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
   };
