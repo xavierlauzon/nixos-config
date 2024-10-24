@@ -3,6 +3,7 @@
 let
   cfg = config.host.network.wired;
   bridgecfg = config.host.network.bridge;
+
   defaultIP =
   if ((cfg.ip == "0.0.0.0/0") && (cfg.type == "static"))
   then true
