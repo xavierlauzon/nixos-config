@@ -37,11 +37,11 @@ in {
     hardware.amdgpu = {
         initrd.enable = true;
         opencl.enable = true;
-#        amdvlk = {
-#            enable = false;
-#            supportExperimental.enable = true;
-#            support32Bit.enable = true;
- #       };
+        amdvlk = {
+            enable = true;
+            supportExperimental.enable = true;
+            support32Bit.enable = true;
+        };
     };
 
     services.xserver.videoDrivers = [
