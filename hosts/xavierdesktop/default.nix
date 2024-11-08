@@ -56,14 +56,25 @@
     network = {
       hostname = "xavierdesktop";
       wired = {
-       enable = true;
-       type = "static";
-       ip = "192.168.2.10/22";
-       gateway = "192.168.0.1";
-       mac = "f0:2f:74:17:2c:c2";
+        enable = true;
+        interfaces = {
+          testnet = {
+           type = "static";
+           ip = "192.168.2.10/22";
+           gateway = "192.168.0.1";
+           mac = "f0:2f:74:17:2c:c2";
+          };
+        };
       };
-      bridge.enable = true;
-      bridge.interfaces = [ "enp6s0" ];
+      bridges = {
+        br0 = {
+          name = "br0";
+          interfaces = [ "enp6s0" ];
+           type = "static";
+           ip = "192.168.2.10/22";
+           gateway = "192.168.0.1";
+        };
+      };
       vpn = {
         zerotier = {
           enable = true;
