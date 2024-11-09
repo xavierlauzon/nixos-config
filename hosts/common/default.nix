@@ -5,7 +5,7 @@
     ./locale.nix
     ./nix.nix
     ../../users
-  ] ++ (builtins.attrValues outputs.nixosModules);
+  ]; #++ (builtins.attrValues outputs.nixosModules);
 
   boot = {
     initrd = {
