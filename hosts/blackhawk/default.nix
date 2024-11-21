@@ -23,16 +23,25 @@
     network = {
       hostname = "blackhawk";
       wired = {
-       enable = true;
-       type = "static";
-       ip = "192.168.1.215/22";
-       gateway = "192.168.0.1";
-       mac = "58:47:ca:78:27:ab";
+        enable = true;
+        interfaces = {
+          blackhawknet = {
+           type = "static";
+           ip = "192.168.1.215/22";
+           gateway = "192.168.0.1";
+           mac = "58:47:ca:78:27:ab";
+          };
+        };
       };
-#      bridge = {
-#        enable = true;
-#        interfaces = [ "enp3s0" ];
-#      };
+      bridges = {
+        br0 = {
+          name = "br0";
+          interfaces = [ "enp3s0" ];
+           type = "static";
+           ip = "192.168.1.215/22";
+           gateway = "192.168.0.1";
+        };
+      };
       vpn = {
         zerotier = {
           enable = true;

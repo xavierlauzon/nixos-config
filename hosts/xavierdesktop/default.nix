@@ -58,7 +58,7 @@
       wired = {
         enable = true;
         interfaces = {
-          testnet = {
+          xnet = {
            type = "static";
            ip = "192.168.2.10/22";
            gateway = "192.168.0.1";
@@ -95,4 +95,5 @@
      v4l2loopback.out
   ];
   networking.nameservers = [ "192.168.1.215" ];
+  sops.validateSopsFiles = false;
 }
