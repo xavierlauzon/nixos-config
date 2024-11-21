@@ -18,6 +18,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    xl-nixos = {
+#      url = "github:xavierlauzon/nixos-modules";
+      url = "path:/home/xavier/src/nixos-modules";
+      flake = false;
+    };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     disko = {
@@ -44,10 +49,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xl-nixos = {
-      url = "github:xavierlauzon/nixos-modules";
-      flake = false;
-    };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
@@ -61,15 +62,15 @@
       pkgsFor = lib.genAttrs systems (system: import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-            overlays = [
-
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-    ];
+          overlays = [
+            outputs.overlays.additions
+            outputs.overlays.modifications
+            outputs.overlays.unstable-packages
+          ];
       });
-      configDir = "${self.outPath}";
+      commonSecretsModule = {
+        config.host.feature.secrets.secretsBasePath = self.outPath;
+      };
     in
     {
       inherit lib;
@@ -86,26 +87,22 @@
 #      };
 
       nixosConfigurations = {
-#        blackhawk = lib.nixosSystem { # Server Added 2024-08-23
-#          modules = [
-#            (import "${inputs.xl-nixos}/default.nix" {
-#              configDir = "${self.outPath}";
-#              lib = nixpkgs.lib;
-#            })
-#            ./hosts/blackhawk
-#          ];
-#          specialArgs = { inherit inputs outputs; };
-#        };
+        blackhawk = lib.nixosSystem { # Server Added 2024-08-23
+          modules = [
+            commonSecretsModule
+            "${inputs.xl-nixos}/default.nix"
+            ./hosts/blackhawk
+          ];
+          specialArgs = { inherit inputs outputs; };
+        };
 
         xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07
           modules = [
-            (import "${inputs.xl-nixos}/default.nix" {
-              configDir = "${self.outPath}";
-              lib = nixpkgs.lib;
-            })
-            ./hosts/blackhawk
+            commonSecretsModule
+            "${inputs.xl-nixos}/default.nix"
+            ./hosts/xavierdesktop
           ];
-          specialArgs = { inherit inputs outputs configDir; };
+          specialArgs = { inherit inputs outputs; };
 
         };
     };
