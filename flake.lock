@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732016537,
-        "narHash": "sha256-XwXUK+meYnlhdQz2TVE4Wv+tsx1CkdGbDPt1tRzCNH4=",
+        "lastModified": 1732229547,
+        "narHash": "sha256-vtUhSQFgDfyyNM6rgmn35A2T+L5PXBS0H89cxWK9N2A=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "61cee20168a3ebb71a9efd70a55adebaadfbe4d4",
+        "rev": "edabc790a834326dcb5810e2698fa743483510d0",
         "type": "github"
       },
       "original": {
@@ -651,7 +651,7 @@
     "xl-nixos": {
       "flake": false,
       "locked": {
-        "lastModified": 1732227462,
+        "lastModified": 1732237283,
         "narHash": "sha256-BPtJHXRyAHM7NAnZXCKNpr3BWEo+8LiGrJk83LGFXvA=",
         "path": "/home/xavier/src/nixos-modules",
         "type": "path"
