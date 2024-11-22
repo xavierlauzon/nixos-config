@@ -59,6 +59,7 @@
     user = {
       root.enable = true;
       xavier.enable = true;
+      sam.enable = true;
     };
   };
   networking.firewall.enable = false;

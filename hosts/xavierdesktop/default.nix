@@ -29,7 +29,7 @@
       graphics = {
         enable = true;
         backend = "wayland";
-        displayManager.manager = "sddm";
+        displayManager.manager = "greetd";
         windowManager.manager = "hyprland";
       };
       virtualization = {
@@ -89,6 +89,7 @@
     user = {
       root.enable = true;
       xavier.enable = true;
+      sam.enable = true;
     };
   };
   boot.extraModulePackages = with config.boot.kernelPackages; [

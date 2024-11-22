@@ -4,6 +4,7 @@ with lib;
 {
   imports = [
     ./xavier
+    ./sam
     ./root
   ];
 }
