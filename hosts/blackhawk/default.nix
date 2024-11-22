@@ -56,6 +56,9 @@
       };
     };
     role = "server";
+    service = {
+      vscode_server.enable = true;
+    };
     user = {
       root.enable = true;
       xavier.enable = true;
