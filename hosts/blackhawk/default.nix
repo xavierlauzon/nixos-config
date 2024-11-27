@@ -21,7 +21,12 @@
       raid.enable = false;                      # This line can be removed if not needed as it is already default set by the role template
     };
     network = {
-      hostname = "blackhawk";
+      dns = {
+        enable = true;
+        servers = [ "127.0.0.1" ];
+        stub = false;
+        hostname = "blackhawk";
+      };
       wired = {
         enable = true;
         interfaces = {
@@ -66,6 +71,4 @@
     };
   };
   networking.firewall.enable = false;
-  networking.nameservers = [ "127.0.0.1" ];
-  services.resolved.extraConfig = "DNSStubListener=no";
 }
