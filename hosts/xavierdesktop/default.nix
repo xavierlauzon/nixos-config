@@ -21,9 +21,6 @@
             "quiet"
             "video=DP-3:7680x2160@240"
           ];
-          modules = [
-            "v4l2loopback"
-          ];
         };
       };
       graphics = {
@@ -54,7 +51,10 @@
       };
     };
     network = {
-      hostname = "xavierdesktop";
+      dns = {
+        servers = [ "192.168.1.215" ];
+        hostname = "xavierdesktop";
+      };
       wired = {
         enable = true;
         interfaces = {
@@ -92,9 +92,6 @@
       sam.enable = true;
     };
   };
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-     v4l2loopback.out
-  ];
   networking.nameservers = [ "192.168.1.215" ];
   sops.validateSopsFiles = false;
 }
