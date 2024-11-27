@@ -18,13 +18,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    xl-nixos = {
-#      url = "github:xavierlauzon/nixos-modules";
+    nixos-modules = {
+      #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
-      flake = false;
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +35,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -53,7 +50,7 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-darwin, xl-nixos, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib;
@@ -68,43 +65,26 @@
             outputs.overlays.unstable-packages
           ];
       });
-      commonSecretsModule = {
-        config.host.feature.secrets.secretsBasePath = self.outPath;
-      };
     in
     {
       inherit lib;
-      nixosModules = import ./modules;
       overlays = import ./overlays {inherit inputs;};
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
-#      darwinConfigurations = {
-#        xaviermacbook = darwin.lib.darwinSystem {
-#          modules = [ ./hosts/xaviermacbook ];
-#          specialArgs = { inherit inputs outputs; };
-#        };
-#      };
-
       nixosConfigurations = {
         blackhawk = lib.nixosSystem { # Server Added 2024-08-23
           modules = [
-            commonSecretsModule
-            "${inputs.xl-nixos}/default.nix"
             ./hosts/blackhawk
           ];
           specialArgs = { inherit inputs outputs; };
         };
-
         xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07
           modules = [
-            commonSecretsModule
-            "${inputs.xl-nixos}/default.nix"
             ./hosts/xavierdesktop
           ];
           specialArgs = { inherit inputs outputs; };
-
         };
-    };
+      };
   };
 }
