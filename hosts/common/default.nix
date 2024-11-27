@@ -5,7 +5,7 @@
     ./locale.nix
     ./nix.nix
     ../../users
-  ]; #++ (builtins.attrValues outputs.nixosModules);
+  ];
 
   boot = {
     initrd = {
@@ -60,9 +60,9 @@
       home-manager.enable = mkDefault true;
       secrets.enable = mkDefault true;
     };
-    network = {
-      domainname = mkDefault "xavierlauzon.com";
-      domainsearch = mkDefault [ "xavierlauzon.com" ];
+    network.dns = {
+      domain = mkDefault "xavierlauzon.com";
+      search = mkDefault [ "xavierlauzon.com" ];
     };
     service = {
       logrotate = {
@@ -73,6 +73,7 @@
         harden = mkDefault true;
       };
     };
+    configDir = mkForce self.outPath;
   };
 
   security = {
