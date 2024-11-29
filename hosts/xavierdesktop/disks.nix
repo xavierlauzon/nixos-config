@@ -44,10 +44,6 @@ in
                     mountpoint = "/";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "/root/snapshots" = {
-                    mountpoint = "/.snapshots";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
                   "/home" = {
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };

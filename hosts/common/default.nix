@@ -1,7 +1,8 @@
-{ config, outputs, lib, pkgs, ... }:
+{ config, inputs, outputs, lib, pkgs, self, ... }:
   with lib;
 {
   imports = [
+    inputs.nixos-modules.nixosModules
     ./locale.nix
     ./nix.nix
     ../../users
