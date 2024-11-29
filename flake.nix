@@ -70,16 +70,16 @@
 
       nixosConfigurations = {
         blackhawk = lib.nixosSystem { # Server Added 2024-08-23
-          modules = [
-            ./hosts/blackhawk
-          ];
-          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/blackhawk ];
+          specialArgs = { inherit self inputs outputs; };
         };
         xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07
-          modules = [
-            ./hosts/xavierdesktop
-          ];
-          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/xavierdesktop ];
+          specialArgs = { inherit self inputs outputs; };
+        };
+        rescue = lib.nixosSystem { # Rescue Added 2024-11-29
+          modules = [ ./hosts/rescue ];
+          specialArgs = { inherit self inputs outputs; };
         };
       };
   };
