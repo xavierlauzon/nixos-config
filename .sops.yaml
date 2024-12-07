@@ -1,7 +1,7 @@
 keys:
   - &user_xavier age1c68qgdn67fm244dzevutpz7kxy0g7dds2kdd5pcmxguv9yfyvqsqvj5h8y
   - &host_xavierdesktop age1ca3msprfg6cesmg05q5hpak2tazhelv47etz76mkmh9yssatlyuq6uwnwu
-  - &host_blackhawk age1nwzul7zfwnfk7n44vns4dh425uuyly8k5pddwy0nle5xt8mp8s4s2a65zf
+  - &host_blackhawk age1kvu5jrrveq6f4j8df2auh532sxd6u7nj7xeajd4ljfl63990k4qs9gz8eu
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
