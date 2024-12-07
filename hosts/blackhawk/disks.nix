@@ -23,7 +23,7 @@ in
             };
             swap = {
               label = "swap";
-              size = "4G"; # SWAP - Do not Delete this comment
+              size = "32G"; # SWAP - Do not Delete this comment
               content = {
                 type = "swap";
                 resumeDevice = true;
@@ -42,14 +42,10 @@ in
                   extraArgs = [ "-f" ];
                   subvolumes = {
                     "/root" = {
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/root/active" = {
                       mountpoint = "/";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
-                    "/root/snapshots" = {
-                      mountpoint = "/.snapshots";
+                    "/root-blank" = {
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "/home" = {
@@ -65,6 +61,17 @@ in
                     };
                     "/nix" = {
                       mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/persist" = {
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/persist/active" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/persist/snapshots" = {
+                      mountpoint = "/persist/.snapshots";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "/var_lib_docker" = {

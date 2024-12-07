@@ -10,15 +10,12 @@
     feature = {
     };
     filesystem = {
-      encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
-      impermanence.enable = false;               # This line can be removed if not needed as it is already default set by the role template
-      swap = {
-        partition = "disk/by-partlabel/swap";
-      };
+#      swap = {
+#        partition = "disk/by-partlabel/swap";
+#      };
     };
     hardware = {
       cpu = "amd";
-      raid.enable = false;                      # This line can be removed if not needed as it is already default set by the role template
     };
     network = {
       dns = {
@@ -71,4 +68,5 @@
     };
   };
   networking.firewall.enable = false;
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
