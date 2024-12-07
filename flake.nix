@@ -69,6 +69,10 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
+        ms1 = lib.nixosSystem { # Server Added 2024-12-07
+          modules = [ ./hosts/ms1 ];
+          specialArgs = { inherit self inputs outputs; };
+        };
         blackhawk = lib.nixosSystem { # Server Added 2024-08-23
           modules = [ ./hosts/blackhawk ];
           specialArgs = { inherit self inputs outputs; };
