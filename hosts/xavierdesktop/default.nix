@@ -94,4 +94,5 @@
   };
   networking.nameservers = [ "192.168.1.215" ];
   sops.validateSopsFiles = false;
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
