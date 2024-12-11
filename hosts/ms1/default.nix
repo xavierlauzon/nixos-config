@@ -13,6 +13,15 @@
           modules = [ "xhci_pci" "ehci_pci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
         };
       };
+      virtualization = {
+        rke2 = {
+          bootstrapMode = "initial";
+          enableRancher = true;
+          rancherHostname = "rancher.xavierlauzon.com";
+          rancherTlsSecretEnabled = false;
+          rancherLetsEncryptEmail = "xavierl@rogers.com";
+        };
+      };
     };
     filesystem = {
       encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
@@ -28,8 +37,8 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "1.1.1.1" ];
-        stub = true;
+        servers = [ "192.168.191.1" "1.1.1.1" ];
+        stub = false;
         hostname = "ms1";
       };
       wired = {
