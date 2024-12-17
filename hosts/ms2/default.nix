@@ -12,6 +12,29 @@
         initrd = {
           modules = [ "xhci_pci" "ehci_pci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
         };
+        loader = "grub";
+      };
+      virtualization = {
+        rke2 = {
+          enable = true;
+          cluster = {
+            bootstrapMode = "server";
+            nodeName = "ms2";
+            nodeIP = "192.168.191.3";
+            serverURL = "https://cluster.xavierlauzon.com:9345";
+          };
+          networking = {
+            clusterDomain = "cluster.xavierlauzon.com";
+          };
+          security = {
+            tls = {
+              san = [
+                "ms1.xavierlauzon.com"
+                "cluster.xavierlauzon.com"
+               ];
+            };
+          };
+        };
       };
     };
     filesystem = {
@@ -28,8 +51,8 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "1.1.1.1" ];
-        stub = true;
+        servers = [ "192.168.191.1" ];
+        stub = false;
         hostname = "ms2";
       };
       wired = {
@@ -75,6 +98,7 @@
       vscode_server.enable = true;
     };
   };
+  networking.firewall.enable = false;
   nixpkgs.hostPlatform = "x86_64-linux";
 
 }

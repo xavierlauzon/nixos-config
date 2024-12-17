@@ -12,14 +12,27 @@
         initrd = {
           modules = [ "xhci_pci" "ehci_pci" "uhci_hcd" "hpsa" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
         };
+        loader = "grub";
       };
       virtualization = {
         rke2 = {
-          bootstrapMode = "initial";
-          enableRancher = true;
-          rancherHostname = "rancher.xavierlauzon.com";
-          rancherTlsSecretEnabled = false;
-          rancherLetsEncryptEmail = "xavierl@rogers.com";
+          enable = true;
+          cluster = {
+            bootstrapMode = "initial";
+            nodeName = "ms1";
+            nodeIP = "192.168.191.2";
+          };
+          networking = {
+            clusterDomain = "cluster.xavierlauzon.com";
+          };
+          security = {
+            tls = {
+              san = [
+                "ms1.xavierlauzon.com"
+                "cluster.xavierlauzon.com"
+               ];
+            };
+          };
         };
       };
     };
@@ -70,9 +83,9 @@
           port = 9993;
         };
       };
-#      firewall = {
-#        opensnitch.enable = false;
-#      };
+      firewall = {
+        opensnitch.enable = false;
+      };
     };
     role = "server";
     user = {
@@ -84,5 +97,6 @@
       vscode_server.enable = true;
     };
   };
+  networking.firewall.enable = false;
   nixpkgs.hostPlatform = "x86_64-linux";
 }
