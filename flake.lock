@@ -513,14 +513,17 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1734738751,
-        "narHash": "sha256-J5wnBpoSwRFqlWzW+WwUKQsy6lM/KzTK87R0gAcUhgM=",
-        "path": "/home/xavier/src/nixos-modules",
-        "type": "path"
+        "lastModified": 1734738716,
+        "narHash": "sha256-sIilr2rIezZZA29PJLodHQl3kDjK44dKO5dqSRGYUfw=",
+        "owner": "xavierlauzon",
+        "repo": "nixos-modules",
+        "rev": "d02ce7a9313815d1ed1f8ef7e336d3e90609cbb9",
+        "type": "github"
       },
       "original": {
-        "path": "/home/xavier/src/nixos-modules",
-        "type": "path"
+        "owner": "xavierlauzon",
+        "repo": "nixos-modules",
+        "type": "github"
       }
     },
     "nixos-rke2": {
