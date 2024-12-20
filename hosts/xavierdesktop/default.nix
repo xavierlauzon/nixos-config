@@ -18,8 +18,8 @@
       boot = {
         kernel = {
           parameters = [
-            "quiet"
             "video=DP-3:7680x2160@240"
+            "video=DP-2:3840x1080@120"
           ];
         };
       };
@@ -32,6 +32,7 @@
       virtualization = {
         flatpak.enable = true;
         waydroid.enable = true;
+        rke2.enable = false;
       };
     };
     filesystem = {
