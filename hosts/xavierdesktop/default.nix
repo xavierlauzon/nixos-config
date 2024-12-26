@@ -21,7 +21,11 @@
             "video=DP-3:7680x2160@240"
             "video=DP-2:3840x1080@120"
           ];
+          #modules = [
+          #  "r8125"
+          #];
         };
+
       };
       graphics = {
         enable = true;
@@ -36,8 +40,8 @@
       };
     };
     filesystem = {
-      encryption.enable = false;                 # This line can be removed if not needed as it is already default set by the role template
-      impermanence.enable = false;               # This line can be removed if not needed as it is already default set by the role template
+      encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
+      impermanence.enable = true;               # This line can be removed if not needed as it is already default set by the role template
       swap = {
         partition = "disk/by-partlabel/swap";
       };
@@ -46,7 +50,7 @@
       cpu = "amd";
       gpu = "amd";
       keyboard.enable = true;
-      raid.enable = false;
+      raid.enable = true;
       sound = {
         server = "pipewire";
       };
@@ -63,14 +67,14 @@
            type = "static";
            ip = "192.168.2.10/22";
            gateway = "192.168.0.1";
-           mac = "f0:2f:74:17:2c:c2";
+           mac = "10:ff:e0:3a:3f:e6";
           };
         };
       };
       bridges = {
         br0 = {
           name = "br0";
-          interfaces = [ "enp6s0" ];
+          interfaces = [ "enp18s0" ];
            type = "static";
            ip = "192.168.2.10/22";
            gateway = "192.168.0.1";
@@ -96,4 +100,6 @@
   networking.nameservers = [ "192.168.1.215" ];
   sops.validateSopsFiles = false;
   nixpkgs.hostPlatform = "x86_64-linux";
+  boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
+  nixpkgs.config.allowBroken = true;
 }
