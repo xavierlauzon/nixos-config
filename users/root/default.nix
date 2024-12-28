@@ -14,6 +14,8 @@
   config = mkIf config.host.user.root.enable {
     users.users.root = {
       shell = pkgs.bashInteractive;
+
+      openssh.authorizedKeys.keys = [ (builtins.readFile ./ssh.pub) ];
       hashedPasswordFile = mkDefault config.sops.secrets.root-password.path;
     };
 

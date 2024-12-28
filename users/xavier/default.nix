@@ -7,7 +7,7 @@ in
   options = {
     host.user.xavier = {
       enable = mkOption {
-        default = false;
+        default = true;
         type = with types; bool;
         description = "Enable Xavier";
       };
@@ -30,6 +30,7 @@ in
         "dialout"
         "docker"
         "git"
+        "i2c"
         "input"
         "libvirtd"
         "lp"

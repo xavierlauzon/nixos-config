@@ -7,7 +7,7 @@ in
   options = {
     host.user.sam = {
       enable = mkOption {
-        default = false;
+        default = true;
         type = with types; bool;
         description = "Enable Sam";
       };
