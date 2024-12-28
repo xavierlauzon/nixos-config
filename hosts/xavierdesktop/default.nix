@@ -15,18 +15,6 @@
         heroic.enable = true;
         steam.enable = true;
       };
-      boot = {
-        kernel = {
-          parameters = [
-            "video=DP-3:7680x2160@240"
-            "video=DP-2:3840x1080@120"
-          ];
-          #modules = [
-          #  "r8125"
-          #];
-        };
-
-      };
       graphics = {
         enable = true;
         backend = "wayland";
