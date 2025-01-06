@@ -18,11 +18,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-modules = {
-      url = "github:xavierlauzon/nixos-modules";
-      #url = "path:/home/xavier/src/nixos-modules";
-    };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-modules = {
+      #url = "github:xavierlauzon/nixos-modules";
+      url = "path:/home/xavier/src/nixos-modules";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
