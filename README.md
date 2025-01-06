@@ -25,3 +25,19 @@ Based off [Tiredofit's configuration](https://github.com/tiredofit/nixos-config/
 - `overlays`: Ammendments and updates to packages that exist in the nix ecosphere
 - `pkgs`: Custom packages, services, scripts that are specific to this installation
 - `users`: Individual User folders
+
+## Zerotier
+
+`cat /var/lib/zerotier-one/{identity.public,identity.secret}`
+
+place contents into hosts/{name}/secrets/zerotier/identity.yaml like so:
+
+```yaml
+
+zerotier:
+    identity_public: xxx
+    identity_private: xxx
+
+```
+
+encrypt using sops
