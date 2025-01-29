@@ -86,6 +86,7 @@
           specialArgs = { inherit self inputs outputs; };
         };
         rescue = lib.nixosSystem { # Rescue Added 2024-11-29
+          system = "x86_64-linux";
           modules = [ ./hosts/rescue ];
           specialArgs = { inherit self inputs outputs; };
         };
