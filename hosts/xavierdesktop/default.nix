@@ -38,6 +38,7 @@
       cpu = "amd";
       gpu = "amd";
       keyboard.enable = true;
+      printing.enable = false;
       raid.enable = true;
       sound = {
         server = "pipewire";
@@ -86,7 +87,6 @@
     };
   };
   networking.nameservers = [ "192.168.1.215" ];
-  sops.validateSopsFiles = false;
   nixpkgs.hostPlatform = "x86_64-linux";
   boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   nixpkgs.config.allowBroken = true;
