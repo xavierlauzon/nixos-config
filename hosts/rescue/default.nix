@@ -49,7 +49,7 @@
       logrotate.enable = false;
     };
     user = {
-      root.enable = true;
+      root.enable = false;
       xavier.enable = true;
       sam.enable = true;
     };
@@ -60,6 +60,7 @@
     firewall.logRefusedConnections = lib.mkForce false;
   };
   boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
-  system.stateVersion = lib.mkForce "25.05";
+  system.stateVersion = lib.mkForce "x86_64-linux";
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
+  services.openssh.settings.PermitRootLogin = mkForce "yes";
 }
