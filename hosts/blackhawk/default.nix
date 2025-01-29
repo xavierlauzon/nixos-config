@@ -8,6 +8,28 @@
 
   host = {
     feature = {
+      virtualization = {
+        rke2 = {
+          enable = true;
+          cluster = {
+            bootstrapMode = "server";
+            nodeName = "blackhawk";
+            nodeIP = "192.168.191.1";
+            serverURL = "https://cluster.xavierlauzon.com:9345";
+          };
+          networking = {
+            clusterDomain = "cluster.xavierlauzon.com";
+          };
+          security = {
+            tls = {
+              san = [
+                "ms1.xavierlauzon.com"
+                "cluster.xavierlauzon.com"
+               ];
+            };
+          };
+        };
+      };
     };
     filesystem = {
 #      swap = {
