@@ -6,7 +6,7 @@ let
 in {
   disko.devices = {
     disk = {
-      ${rawdisk1} = {
+      disk1 = {
         device = "${rawdisk1}";
         type = "disk";
         content = {
@@ -37,14 +37,16 @@ in {
               content = {
                 type = "luks";
                 name = "${cryptdisk1}";
-                extraOpenArgs = [ "--allow-discards" ];
+                settings = {
+                  allowDiscards = true;
+                };
                 passwordFile = "/tmp/secret.key"; # Interactive
               };
             };
           };
         };
       };
-      ${rawdisk2} = {
+      disk2 = {
         device = "${rawdisk2}";
         type = "disk";
         content = {
@@ -56,7 +58,9 @@ in {
               content = {
                 type = "luks";
                 name = "${cryptdisk2}";
-                extraOpenArgs = [ "--allow-discards" ];
+                settings = {
+                  allowDiscards = true;
+                };
                 # if you want to use the key for interactive login be sure there is no trailing newline
                 # for example use `echo -n "password" > /tmp/secret.key`
                 passwordFile = "/tmp/secret.key"; # Interactive
