@@ -10,7 +10,7 @@
     feature = {
       virtualization = {
         rke2 = {
-          enable = true;
+          enable = false;
           cluster = {
             bootstrapMode = "server";
             nodeName = "blackhawk";
@@ -42,7 +42,7 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "127.0.0.1" ];
+        servers = [ "192.168.191.1" ];
         stub = false;
         hostname = "blackhawk";
       };
