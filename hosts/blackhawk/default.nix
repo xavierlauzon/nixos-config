@@ -7,6 +7,11 @@
   ];
 
   host = {
+    container = {
+      postfix-relay = {
+        enable = true;
+      };
+    };
     feature = {
       virtualization = {
         rke2 = {
@@ -88,6 +93,13 @@
       xavier.enable = true;
       sam.enable = true;
     };
+  };
+  services.hydra = {
+    enable = true;
+    hydraURL = "https://hydra.xavierlauzon.com";
+    notificationSender = "hydra@localhost";
+    buildMachinesFiles = [];
+    useSubstitutes = true;
   };
   networking.firewall.enable = false;
   nixpkgs.hostPlatform = "x86_64-linux";
