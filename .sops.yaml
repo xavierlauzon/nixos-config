@@ -4,6 +4,7 @@ keys:
   - &host_blackhawk age1kvu5jrrveq6f4j8df2auh532sxd6u7nj7xeajd4ljfl63990k4qs9gz8eu
   - &host_ms1 age15sxhzp6jqq74p9et03aan0n37mqfmzmxl8tsnhuc6aj37ans35vsmeaxjf
   - &host_ms2 age1u0sm8ard24lhncrr6d8jqxqmyplaxe7psack03uwtj96vv656vks842qcg
+  - &host_falcon age1m9asw63daavqdyyh8swzwx3rr8qhdqzrejqeksqnx0n7gjj8u3zq9u6hmu
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
@@ -13,6 +14,7 @@ creation_rules:
           - *host_blackhawk
           - *host_ms1
           - *host_ms2
+          - *host_falcon
   - path_regex: users/secrets.yaml
     key_groups:
       - age:
@@ -21,6 +23,7 @@ creation_rules:
           - *host_blackhawk
           - *host_ms1
           - *host_ms2
+          - *host_falcon
   - path_regex: hosts/xavierdesktop/secrets/.*
     key_groups:
       - age:
@@ -42,5 +45,13 @@ creation_rules:
     key_groups:
       - age:
           - *host_ms2
+          - *host_xavierdesktop
+          - *user_xavier
+  - path_regex: hosts/falcon/secrets/.*
+    key_groups:
+      - age:
+          - *host_falcon
+          - *host_xavierdesktop
+          - *user_xavier
           - *host_xavierdesktop
           - *user_xavier
