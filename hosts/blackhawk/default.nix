@@ -9,7 +9,7 @@
   host = {
     container = {
       postfix-relay = {
-        enable = true;
+        enable = false;
       };
     };
     feature = {
@@ -47,28 +47,20 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "192.168.191.1" ];
+        servers = [ "127.0.0.1" ];
         stub = false;
         hostname = "blackhawk";
       };
       wired = {
         enable = true;
-        interfaces = {
-          blackhawknet = {
-           type = "static";
-           ip = "192.168.1.215/22";
-           gateway = "192.168.0.1";
-           mac = "58:47:ca:78:27:ab";
-          };
-        };
       };
       bridges = {
         br0 = {
           name = "br0";
-          interfaces = [ "enp3s0" ];
-           type = "static";
-           ip = "192.168.1.215/22";
-           gateway = "192.168.0.1";
+          interfaces = [ "58:47:ca:78:27:ab" ];
+          type = "static";
+          ip = "192.168.1.215/22";
+          gateway = "192.168.0.1";
         };
       };
       vpn = {
@@ -101,6 +93,6 @@
     buildMachinesFiles = [];
     useSubstitutes = true;
   };
-  networking.firewall.enable = false;
+  networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
   nixpkgs.hostPlatform = "x86_64-linux";
 }

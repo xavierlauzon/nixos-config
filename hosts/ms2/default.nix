@@ -57,22 +57,14 @@
       };
       wired = {
         enable = true;
-        interfaces = {
-          ms1net = {
-           type = "static";
-           ip = "10.0.0.151/24";
-           gateway = "10.0.0.1";
-           mac = "94:57:a5:52:6d:2c";
-          };
-        };
       };
       bridges = {
         br0 = {
           name = "br0";
-          interfaces = [ "eno1" ];
-           type = "static";
-           ip = "10.0.0.151/24";
-           gateway = "10.0.0.1";
+          interfaces = [ "94:57:a5:52:6d:2c" ];
+          type = "static";
+          ip = "10.0.0.151/24";
+          gateway = "10.0.0.1";
         };
       };
       vpn = {

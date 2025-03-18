@@ -51,22 +51,14 @@
       };
       wired = {
         enable = true;
-        interfaces = {
-          xnet = {
-           type = "static";
-           ip = "192.168.2.10/22";
-           gateway = "192.168.0.1";
-           mac = "10:ff:e0:3a:3f:e6";
-          };
-        };
       };
       bridges = {
         br0 = {
           name = "br0";
-          interfaces = [ "enp18s0" ];
-           type = "static";
-           ip = "192.168.2.10/22";
-           gateway = "192.168.0.1";
+          interfaces = [ "10:ff:e0:3a:3f:e6" ];
+          type = "static";
+          ip = "192.168.2.10/22";
+          gateway = "192.168.0.1";
         };
       };
       vpn = {
@@ -87,7 +79,6 @@
     };
   };
   networking.nameservers = [ "192.168.1.215" ];
-  nixpkgs.hostPlatform = "x86_64-linux";
   boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   nixpkgs.config.allowBroken = true;
 }
