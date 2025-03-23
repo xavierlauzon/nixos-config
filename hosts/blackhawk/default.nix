@@ -58,9 +58,12 @@
         br0 = {
           name = "br0";
           interfaces = [ "58:47:ca:78:27:ab" ];
-          type = "static";
-          ip = "192.168.1.215/22";
-          gateway = "192.168.0.1";
+          ipv4 = {
+            enable = true;
+            type = "static";
+            addresses = [ "192.168.1.215/22" ];
+            gateway = "192.168.0.1";
+          };
         };
       };
       vpn = {

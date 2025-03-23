@@ -56,9 +56,12 @@
         br0 = {
           name = "br0";
           interfaces = [ "10:ff:e0:3a:3f:e6" ];
-          type = "static";
-          ip = "192.168.2.10/22";
-          gateway = "192.168.0.1";
+          ipv4 = {
+            enable = true;
+            type = "static";
+            addresses = [ "192.168.2.10/22" ];
+            gateway = "192.168.0.1";
+          };
         };
       };
       vpn = {
@@ -78,7 +81,6 @@
       sam.enable = true;
     };
   };
-  networking.nameservers = [ "192.168.1.215" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
   nixpkgs.config.allowBroken = true;
 }

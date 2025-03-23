@@ -61,9 +61,12 @@
         br0 = {
           name = "br0";
           interfaces = [ "94:57:a5:6b:1c:04" ];
-          type = "static";
-          ip = "10.0.0.150/24";
-          gateway = "10.0.0.1";
+          ipv4 = {
+            enable = true;
+            type = "static";
+            addresses = [ "10.0.0.150/24" ];
+            gateway = "10.0.0.1";
+          };
         };
       };
       vpn = {
