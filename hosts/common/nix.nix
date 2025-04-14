@@ -42,6 +42,7 @@
       allowBroken = mkDefault false;
       allowUnfree = mkDefault true;
       allowUnsupportedSystem = mkDefault true;
+      allowUnfreePredicate = (_: true);
       permittedInsecurePackages = [
       ];
     };
@@ -56,7 +57,7 @@
   };
 
   system = {
-    autoUpgrade.enable = mkDefault false;
+    autoUpgrade.enable = mkDefault true;
     stateVersion = mkDefault "23.11";
   };
 }
