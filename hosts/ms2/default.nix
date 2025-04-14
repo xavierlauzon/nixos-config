@@ -16,7 +16,7 @@
       };
       virtualization = {
         rke2 = {
-          enable = true;
+          enable = false;
           cluster = {
             bootstrapMode = "server";
             nodeName = "ms2";
@@ -79,9 +79,6 @@
           port = 9993;
         };
       };
-#      firewall = {
-#        opensnitch.enable = false;
-#      };
     };
     role = "server";
     user = {
@@ -93,7 +90,4 @@
       vscode_server.enable = true;
     };
   };
-  networking.firewall.enable = false;
-  nixpkgs.hostPlatform = "x86_64-linux";
-
 }

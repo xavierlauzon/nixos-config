@@ -36,9 +36,7 @@
           interfaces = [ "fc:34:97:b0:bb:9a" ];
           ipv4 = {
             enable = true;
-            type = "static";
-            addresses = [ "192.168.1.83/22" ];
-            gateway = "192.168.0.1";
+            type = "dynamic";
           };
         };
       };

@@ -7,6 +7,19 @@
   ];
 
   host = {
+    container = {
+      socket-proxy.enable = true;
+      traefik = {
+        enable = true;
+        logship = "false";
+        monitor = "false";
+      };
+      traefik-internal = {
+        enable = true;
+        logship = "false";
+        monitor = "false";
+      };
+    };
     feature = {
       boot = {
         initrd = {
@@ -16,7 +29,7 @@
       };
       virtualization = {
         rke2 = {
-          enable = true;
+          enable = false;
           cluster = {
             bootstrapMode = "initial";
             nodeName = "ms1";
@@ -59,7 +72,7 @@
       };
       bridges = {
         br0 = {
-          name = "br0";
+          name = "publicbr0";
           interfaces = [ "94:57:a5:6b:1c:04" ];
           ipv4 = {
             enable = true;
@@ -78,9 +91,6 @@
           port = 9993;
         };
       };
-      firewall = {
-        opensnitch.enable = false;
-      };
     };
     role = "server";
     user = {
@@ -92,6 +102,4 @@
       vscode_server.enable = true;
     };
   };
-  networking.firewall.enable = false;
-  nixpkgs.hostPlatform = "x86_64-linux";
 }

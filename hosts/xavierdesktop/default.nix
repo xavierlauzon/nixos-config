@@ -46,7 +46,7 @@
     };
     network = {
       dns = {
-        servers = [ "192.168.1.215" ];
+        servers = [ "192.168.191.1" ];
         hostname = "xavierdesktop";
       };
       wired = {
