@@ -7,6 +7,19 @@
   ];
 
   host = {
+    container = {
+      socket-proxy.enable = true;
+      traefik = {
+        enable = false;
+        logship = "false";
+        monitor = "false";
+      };
+      traefik-internal = {
+        enable = true;
+        logship = "false";
+        monitor = "false";
+      };
+    };
     feature = {
       appimage.enable = true;
       gaming = {
@@ -46,7 +59,7 @@
     };
     network = {
       dns = {
-        servers = [ "192.168.191.1" ];
+        servers = [ "192.168.1.215" ];
         hostname = "xavierdesktop";
       };
       wired = {

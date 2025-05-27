@@ -19,6 +19,7 @@
     settings = {
       accept-flake-config = true;
       auto-optimise-store = mkDefault true;
+      download-buffer-size = mkDefault 524288000;
       experimental-features = [ "nix-command" "flakes" ];
       # show more log lines for failed builds
       log-lines = 30;
