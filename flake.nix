@@ -23,6 +23,10 @@
       #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
     };
+    nix-networkd = {
+      #url = "github:xavierlauzon/nixos-modules";
+      url = "path:/home/xavier/src/gh/nix-networkd";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +73,14 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
+        hellfire = lib.nixosSystem { # Server Added 2025-06-30
+          modules = [ ./hosts/hellfire ];
+          specialArgs = { inherit self inputs outputs; };
+        };
+        maverick = lib.nixosSystem { # Server Added 2025-06-30
+          modules = [ ./hosts/maverick ];
+          specialArgs = { inherit self inputs outputs; };
+        };
         paveway = lib.nixosSystem { # Server Added 2025-06-26
           modules = [ ./hosts/paveway ];
           specialArgs = { inherit self inputs outputs; };
