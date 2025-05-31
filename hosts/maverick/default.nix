@@ -38,24 +38,24 @@
         enable = true;
         servers = [ "1.1.1.1" ];
         stub = false;
-        hostname = "paveway";
+        hostname = "maverick";
       };
       networkd = {
         enable = true;
       };
       interfaces = {
         eno1 = {
-          mac = "9c:6b:00:96:f8:64";
+          mac = "d8:43:ae:89:b3:70";
         };
       };
       bridges = {
         public = {
           interfaces = [ "eno1" ];
-          mac = "9c:6b:00:96:f8:64";
+          mac = "d8:43:ae:89:b3:70";
           ipv4 = {
             enable = true;
             type = "static";
-            addresses = [ "148.113.221.47/32" ];
+            addresses = [ "148.113.208.85/32" ];
             gateway = "100.64.0.1";
           };
         };

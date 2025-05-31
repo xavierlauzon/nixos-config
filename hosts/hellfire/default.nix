@@ -38,24 +38,24 @@
         enable = true;
         servers = [ "1.1.1.1" ];
         stub = false;
-        hostname = "paveway";
+        hostname = "hellfire";
       };
       networkd = {
         enable = true;
       };
       interfaces = {
         eno1 = {
-          mac = "9c:6b:00:96:f8:64";
+          mac = "9c:6b:00:96:f6:7f";
         };
       };
       bridges = {
         public = {
           interfaces = [ "eno1" ];
-          mac = "9c:6b:00:96:f8:64";
+          mac = "9c:6b:00:96:f6:7f";
           ipv4 = {
             enable = true;
             type = "static";
-            addresses = [ "148.113.221.47/32" ];
+            addresses = [ "148.113.221.56/32" ];
             gateway = "100.64.0.1";
           };
         };
