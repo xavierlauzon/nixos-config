@@ -3,6 +3,7 @@
 {
   imports = [
     inputs.nixos-modules.nixosModules
+    inputs.nix-networkd.nixosModules.default
     ./locale.nix
     ./nix.nix
     ../../users

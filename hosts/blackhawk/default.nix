@@ -59,13 +59,12 @@
         stub = false;
         hostname = "blackhawk";
       };
-      wired = {
+      networkd = {
         enable = true;
       };
-      bridges = {
-        br0 = {
-          name = "publicbr0";
-          interfaces = [ "58:47:ca:78:27:ab" ];
+      interfaces = {
+        public = {
+          mac = "58:47:ca:78:27:ab";
           ipv4 = {
             enable = true;
             type = "static";

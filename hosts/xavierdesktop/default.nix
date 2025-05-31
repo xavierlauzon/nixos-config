@@ -62,12 +62,11 @@
         servers = [ "192.168.1.215" ];
         hostname = "xavierdesktop";
       };
-      wired = {
+      networkd = {
         enable = true;
       };
       bridges = {
         br0 = {
-          name = "br0";
           interfaces = [ "10:ff:e0:3a:3f:e6" ];
           ipv4 = {
             enable = true;
