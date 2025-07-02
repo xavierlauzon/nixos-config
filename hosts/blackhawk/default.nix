@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ...}: {
+{ config, lib, inputs, pkgs, ...}: {
 
   imports = [
     inputs.disko.nixosModules.disko
@@ -10,14 +10,30 @@
     container = {
       socket-proxy.enable = true;
       traefik = {
-        enable = true;
-        logship = "false";
-        monitor = "false";
+        enable = false;
+        logship = false;
+        monitor = false;
       };
       traefik-internal = {
         enable = true;
-        logship = "false";
-        monitor = "false";
+        logship = false;
+        monitor = false;
+        docker.constraint = "Label(`traefik.constraint`, `proxy-internal`)";
+        secrets.files = [ "hosts/common/secrets/container/containetr-traefik-internal.env" ];
+        ports = {
+            http = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+            https = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+            http3 = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+        };
       };
     };
     feature = {
@@ -63,8 +79,14 @@
         enable = true;
       };
       interfaces = {
-        public = {
+        eno1 = {
           mac = "58:47:ca:78:27:ab";
+        };
+      };
+      bridges = {
+        public = {
+          interfaces = [ "eno1" ];
+          mac = "9c:6b:00:96:f8:64";
           ipv4 = {
             enable = true;
             type = "static";
@@ -95,13 +117,6 @@
       xavier.enable = true;
       sam.enable = true;
     };
-  };
-  services.hydra = {
-    enable = true;
-    hydraURL = "https://hydra.xavierlauzon.com";
-    notificationSender = "hydra@localhost";
-    buildMachinesFiles = [];
-    useSubstitutes = true;
   };
   networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
   nixpkgs.hostPlatform = "x86_64-linux";

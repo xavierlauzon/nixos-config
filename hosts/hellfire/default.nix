@@ -7,27 +7,29 @@
   ];
 
   host = {
-    container = {
-      socket-proxy.enable = true;
-      traefik = {
-        enable = true;
-        logship = "false";
-        monitor = "false";
-      };
-      traefik-internal = {
-        enable = true;
-        logship = "false";
-        monitor = "false";
-      };
-    };
     feature = {
+      virtualization = {
+        rke2 = {
+          enable = true;
+          cluster = {
+            bootstrapMode = "server";
+            nodeName = "hellfire";
+            nodeIP = "10.0.0.2";
+            serverURL = "https://10.0.0.1:9345";
+          };
+          advanced = {
+            debug = false;
+            disable = [ "rke2-ingress-nginx" "rke2-traefik" ];
+            cisHardening = false;
+            configPath = "/persist/etc/rke2/config.yaml";
+            dataDir = "/persist/var/lib/rke2";
+          };
+        };
+      };
     };
     filesystem = {
       encryption.enable = true;
       impermanence.enable = true;
-      swap = {
-        partition = "disk/by-partlabel/swap";
-      };
     };
     hardware = {
       cpu = "amd";
@@ -46,6 +48,14 @@
       interfaces = {
         eno1 = {
           mac = "9c:6b:00:96:f6:7f";
+        };
+        vrack = {
+          mac = "9c:6b:00:96:fb:bf";
+          ipv4 = {
+            enable = true;
+            type = "static";
+            addresses = [ "10.0.0.2/24" ];
+          };
         };
       };
       bridges = {
@@ -80,4 +90,5 @@
       sam.enable = true;
     };
   };
+  networking.firewall.enable = false;
 }

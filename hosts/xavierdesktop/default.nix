@@ -8,17 +8,17 @@
 
   host = {
     container = {
-      socket-proxy.enable = true;
-      traefik = {
-        enable = false;
-        logship = "false";
-        monitor = "false";
-      };
-      traefik-internal = {
-        enable = true;
-        logship = "false";
-        monitor = "false";
-      };
+      #socket-proxy.enable = true;
+      #traefik = {
+      #  enable = false;
+      #  logship = "false";
+      #  monitor = "false";
+      #};
+      #traefik-internal = {
+      #  enable = true;
+      #  logship = "false";
+      #  monitor = "false";
+      #};
     };
     feature = {
       appimage.enable = true;
@@ -65,9 +65,14 @@
       networkd = {
         enable = true;
       };
+      interfaces = {
+        eno1 = {
+          mac = "10:ff:e0:3a:3f:e6";
+        };
+      };
       bridges = {
         br0 = {
-          interfaces = [ "10:ff:e0:3a:3f:e6" ];
+          interfaces = [ "eno1" ];
           ipv4 = {
             enable = true;
             type = "static";
@@ -94,5 +99,4 @@
     };
   };
   boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
-  nixpkgs.config.allowBroken = true;
 }

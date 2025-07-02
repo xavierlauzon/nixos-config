@@ -27,16 +27,23 @@
         stub = false;
         hostname = "falcon";
       };
-      wired = {
+      networkd = {
         enable = true;
       };
+      interfaces = {
+        enp65s0f1 = {
+          mac = "fc:34:97:b0:bb:9a";
+        };
+      };
       bridges = {
-        br0 = {
-          name = "br0";
-          interfaces = [ "fc:34:97:b0:bb:9a" ];
+        public = {
+          interfaces = [ "enp65s0f1" ];
+          mac = "fc:34:97:b0:bb:9a";
           ipv4 = {
             enable = true;
-            type = "dynamic";
+            type = "static";
+            addresses = [ "192.168.0.118/22" ];
+            gateway = "192.168.0.1";
           };
         };
       };
