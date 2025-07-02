@@ -17,8 +17,26 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-24-11.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-24-11-small.url = "github:NixOS/nixpkgs/nixos-24.11-small";
+    nixpkgs-25-05.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-25-05-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+
+    home-manager-24-11 = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-24-11";
+    };
+    home-manager-25-05 = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-25-05";
+    };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     nixos-modules = {
       #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
@@ -50,58 +68,167 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
-      lib = nixpkgs.lib;
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      forEachSystem = f: lib.genAttrs systems (sys: f pkgsFor.${sys});
-      pkgsFor = lib.genAttrs systems (system: import nixpkgs {
+      lib = inputs.nixpkgs-25-05.lib;
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+
+      # Supported nixpkgs versions
+      supportedVersions = {
+        "24.11" = {
+          nixpkgs = inputs.nixpkgs-24-11;
+          home-manager = inputs.home-manager-24-11;
+        };
+        "24.11-small" = {
+          nixpkgs = inputs.nixpkgs-24-11-small;
+          home-manager = inputs.home-manager-24-11;
+        };
+        "25.05" = {
+          nixpkgs = inputs.nixpkgs-25-05;
+          home-manager = inputs.home-manager-25-05;
+        };
+        "25.05-small" = {
+          nixpkgs = inputs.nixpkgs-25-05-small;
+          home-manager = inputs.home-manager-25-05;
+        };
+        unstable = {
+          nixpkgs = inputs.nixpkgs-unstable;
+          home-manager = inputs.home-manager-unstable;
+        };
+        "unstable-small" = {
+          nixpkgs = inputs.nixpkgs-unstable-small;
+          home-manager = inputs.home-manager-unstable;
+        };
+      };
+
+      # Create package sets for each system
+      forAllSystems = f: lib.genAttrs systems (system: f system);
+
+      # Generate overlay with all nixpkgs versions
+      nixpkgsVersionsOverlay = final: prev:
+        lib.mapAttrs (name: version:
+          import version.nixpkgs {
+            inherit (prev) system;
+            config.allowUnfree = true;
+            overlays = [];
+          }
+        ) supportedVersions;
+
+      pkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-          overlays = [
+        overlays = [
             outputs.overlays.additions
             outputs.overlays.modifications
+            outputs.overlays.stable-packages
             outputs.overlays.unstable-packages
-          ];
+        ];
       });
+
+      forEachSystem = f: lib.genAttrs systems (sys: f pkgsFor.${sys});
     in
     {
       inherit lib;
-      overlays = import ./overlays {inherit inputs;};
-      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
+      overlays = import ./overlays {inherit inputs; additions = final: prev: {
+      };};
+      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
+
+      mkSystem = { hostPath, packages ? "25.05", system ? "x86_64-linux", extraModules ? [] }:
+        let
+          # nixpkgs mapping from supportedVersions
+          nixpkgsMapping = lib.mapAttrs (name: version: version.nixpkgs) supportedVersions;
+
+          # home-manager mapping from supportedVersions
+          homeManagerMapping = lib.mapAttrs (name: version: version.home-manager) supportedVersions;
+
+          selectedNixpkgs = nixpkgsMapping.${packages} or (throw "Unknown package selection: ${packages}");
+          selectedHomeManager = homeManagerMapping.${packages} or (throw "Unknown package selection: ${packages}");
+
+          # Generate overlay attributes dynamically
+          versionOverlayAttrs = lib.mapAttrs (name: version:
+            import version.nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [];
+            }
+          ) supportedVersions;
+
+          systemPkgs = import selectedNixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              allowBroken = false;
+              allowUnsupportedSystem = true;
+            };
+            overlays = builtins.attrValues outputs.overlays ++ [
+              (final: prev: versionOverlayAttrs)
+            ];
+          };
+        in
+        lib.nixosSystem {
+          modules = [
+            selectedHomeManager.nixosModules.home-manager
+            hostPath
+            {
+              _module.args.nixpkgsBranch = packages;
+            }
+          ] ++ extraModules;
+          specialArgs = {
+            inherit self inputs outputs;
+            home-manager = selectedHomeManager;
+          };
+          inherit (systemPkgs) system;
+          pkgs = systemPkgs;
+        };
+
       nixosConfigurations = {
-        hellfire = lib.nixosSystem { # Server Added 2025-06-30
-          modules = [ ./hosts/hellfire ];
-          specialArgs = { inherit self inputs outputs; };
+        hellfire = self.mkSystem {
+          hostPath = ./hosts/hellfire;
+          packages = "unstable";
         };
-        maverick = lib.nixosSystem { # Server Added 2025-06-30
-          modules = [ ./hosts/maverick ];
-          specialArgs = { inherit self inputs outputs; };
+
+        maverick = self.mkSystem {
+          hostPath = ./hosts/maverick;
+          packages = "unstable";
         };
-        paveway = lib.nixosSystem { # Server Added 2025-06-26
-          modules = [ ./hosts/paveway ];
-          specialArgs = { inherit self inputs outputs; };
+
+        paveway = self.mkSystem {
+          hostPath = ./hosts/paveway;
+          packages = "unstable";
         };
-        falcon = lib.nixosSystem { # Server Added 2025-03-07
-          modules = [ ./hosts/falcon ];
-          specialArgs = { inherit self inputs outputs; };
+
+        falcon = self.mkSystem {
+          hostPath = ./hosts/falcon;
+          packages = "25.05";
         };
-        blackhawk = lib.nixosSystem { # Server Added 2024-08-23
-          modules = [ ./hosts/blackhawk ];
-          specialArgs = { inherit self inputs outputs; };
+
+        blackhawk = self.mkSystem {
+          hostPath = ./hosts/blackhawk;
+          packages = "25.05";
         };
-        xavierdesktop = lib.nixosSystem { # Desktop Added 2024-08-07
-          modules = [ ./hosts/xavierdesktop ];
-          specialArgs = { inherit self inputs outputs; };
+
+        xavierdesktop = self.mkSystem {
+          hostPath = ./hosts/xavierdesktop;
+          packages = "25.05";
         };
-        rescue = lib.nixosSystem { # Rescue Added 2024-11-29
+
+        rescue = self.mkSystem {
+          hostPath = ./hosts/rescue;
+          packages = "25.05";
           system = "x86_64-linux";
-          modules = [ ./hosts/rescue ];
-          specialArgs = { inherit self inputs outputs; };
         };
+
       };
-  };
+
+      profiles = lib.mkOption {
+        type = with lib.types; attrsOf (attrsOf anything);
+        default = {};
+      };
+    };
 }

@@ -22,7 +22,6 @@
   };
 
   hardware.enableRedistributableFirmware = mkDefault true;
-
   host = {
     application = {
       bash.enable = mkDefault true;
@@ -46,11 +45,13 @@
       mtr.enable = mkDefault true;
       nano.enable = mkDefault true;
       ncdu.enable = mkDefault true;
+      openssl.enable = mkDefault true;
       pciutils.enable = mkDefault true;
       psmisc.enable = mkDefault true;
       rsync.enable = mkDefault true;
       strace.enable = mkDefault true;
       tmux.enable = mkDefault true;
+      tree.enable = mkDefault true;
       wget.enable = mkDefault true;
     };
     feature = {
@@ -91,7 +92,9 @@
     ];
     sudo.wheelNeedsPassword = mkDefault false;
   };
-
   services.fstrim.enable = mkDefault true;
   users.mutableUsers = mkDefault false;
+
+  ## TODO: IMPLEMENT ELSEWHERE
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 }

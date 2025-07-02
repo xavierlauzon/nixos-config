@@ -1,4 +1,4 @@
-{ inputs, lib, outputs, pkgs, ... }:
+{ inputs, lib, outputs, pkgs, nixpkgsBranch, ... }:
   with lib;
 {
   environment = {
@@ -21,7 +21,6 @@
       auto-optimise-store = mkDefault true;
       download-buffer-size = mkDefault 524288000;
       experimental-features = [ "nix-command" "flakes" ];
-      # show more log lines for failed builds
       log-lines = 30;
       # Free up to 10GiB whenever there is less than 5GB left.
       # this setting is in bytes, so we multiply with 1024 thrice
@@ -33,20 +32,8 @@
     };
 
     package = pkgs.nixVersions.stable;
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
-  };
-
-  nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
-    config = {
-      allowBroken = mkDefault false;
-      allowUnfree = mkDefault true;
-      allowUnsupportedSystem = mkDefault true;
-      allowUnfreePredicate = (_: true);
-      permittedInsecurePackages = [
-      ];
-    };
+    registry = mkForce (lib.mapAttrs (_: value: { flake = value; }) inputs);
+    nixPath = mkForce [ "nixpkgs=${inputs."nixpkgs-${builtins.replaceStrings ["."] ["-"] nixpkgsBranch}".outPath}" ];
   };
 
   programs = {
@@ -58,8 +45,17 @@
   };
 
   system = {
-    autoUpgrade.enable = mkDefault true;
+    activationScripts.report-changes = ''
+      PATH=$PATH:${lib.makeBinPath [ pkgs.nvd pkgs.nix ]}
+      nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)
+      mkdir -p /var/log/activations
+      _nvddate=$(date +'%Y%m%d%H%M%S')
+      nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2) > /var/log/activations/$_nvddate-$(ls -dv /nix/var/nix/profiles/system-*-link | tail -1 | cut -d '-' -f 2)-$(readlink $(ls -dv /nix/var/nix/profiles/system-*-link | tail -1) | cut -d - -f 4-).log
+      if grep -q "No version or selection state changes" "/var/log/activations/$_nvddate-$(ls -dv /nix/var/nix/profiles/system-*-link | tail -1 | cut -d '-' -f 2)-$(readlink $(ls -dv /nix/var/nix/profiles/system-*-link | tail -1) | cut -d - -f 4-).log" ; then
+        rm -rf "/var/log/activations/$_nvddate-$(ls -dv /nix/var/nix/profiles/system-*-link | tail -1 | cut -d '-' -f 2)-$(readlink $(ls -dv /nix/var/nix/profiles/system-*-link | tail -1) | cut -d - -f 4-).log"
+      fi
+    '';
+    autoUpgrade.enable = mkDefault false;
     stateVersion = mkDefault "23.11";
   };
 }
-
