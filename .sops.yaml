@@ -13,8 +13,6 @@ creation_rules:
           - *user_xavier
           - *host_xavierdesktop
           - *host_blackhawk
-          - *host_ms1
-          - *host_ms2
           - *host_falcon
           - *host_paveway
           - *host_maverick
@@ -25,8 +23,6 @@ creation_rules:
           - *user_xavier
           - *host_xavierdesktop
           - *host_blackhawk
-          - *host_ms1
-          - *host_ms2
           - *host_falcon
           - *host_paveway
           - *host_maverick

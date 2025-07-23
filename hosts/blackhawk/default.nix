@@ -18,8 +18,6 @@
         enable = true;
         logship = false;
         monitor = false;
-        docker.constraint = "Label(`traefik.constraint`, `proxy-internal`)";
-        secrets.files = [ "hosts/common/secrets/container/containetr-traefik-internal.env" ];
         ports = {
             http = {
               enable = true;
@@ -37,28 +35,6 @@
       };
     };
     feature = {
-      virtualization = {
-        rke2 = {
-          enable = false;
-          cluster = {
-            bootstrapMode = "server";
-            nodeName = "blackhawk";
-            nodeIP = "192.168.191.1";
-            serverURL = "https://cluster.xavierlauzon.com:9345";
-          };
-          networking = {
-            clusterDomain = "cluster.xavierlauzon.com";
-          };
-          security = {
-            tls = {
-              san = [
-                "ms1.xavierlauzon.com"
-                "cluster.xavierlauzon.com"
-               ];
-            };
-          };
-        };
-      };
     };
     filesystem = {
 #      swap = {

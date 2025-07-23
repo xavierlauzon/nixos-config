@@ -9,6 +9,7 @@
   host = {
     feature = {
       virtualization = {
+        docker.enable = false;
         rke2 = {
           enable = true;
           cluster = {
@@ -19,7 +20,8 @@
           };
           advanced = {
             debug = false;
-            disable = [ "rke2-ingress-nginx" "rke2-traefik" ];
+            disable = [ "rke2-ingress-nginx" "rke2-traefik" "rke2-canal" ];
+            extraConfig = [ "--disable-kube-proxy" ];
             cisHardening = false;
             configPath = "/persist/etc/rke2/config.yaml";
             dataDir = "/persist/var/lib/rke2";
@@ -45,6 +47,9 @@
       networkd = {
         enable = true;
       };
+      routeTables = {
+        "vrack-pool" = 200;
+      };
       interfaces = {
         eno1 = {
           mac = "d8:43:ae:89:b3:70";
@@ -56,6 +61,21 @@
             type = "static";
             addresses = [ "10.0.0.3/24" ];
           };
+          routes = [
+            {
+              Destination = "0.0.0.0/0";          # Default route
+              Gateway = "15.235.18.6";            # VRack gateway
+              Table = "vrack-pool";               # Custom routing table
+              OnLink = true;                      # Gateway is directly reachable
+            }
+          ];
+          routingPolicyRules = [
+            {
+              From = "15.235.18.0/29";            # Traffic from VRack subnet
+              Table = "vrack-pool";               # Use VRack routing table
+              Priority = 1000;                    # Rule priority
+            }
+          ];
         };
       };
       bridges = {

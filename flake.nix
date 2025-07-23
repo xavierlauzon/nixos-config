@@ -171,7 +171,7 @@
             ];
           };
         in
-        lib.nixosSystem {
+        selectedNixpkgs.lib.nixosSystem {
           modules = [
             selectedHomeManager.nixosModules.home-manager
             hostPath

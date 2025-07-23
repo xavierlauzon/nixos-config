@@ -95,15 +95,15 @@ in {
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "/persist" = {
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [ "noatime" ];
                     };
                     "/persist/active" = {
                       mountpoint = "/persist";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [ "noatime" ];
                     };
                     "/persist/snapshots" = {
                       mountpoint = "/persist/.snapshots";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [ "noatime" ];
                     };
                     "/var_lib_docker" = {
                       mountpoint = "/var/lib/docker";

@@ -9,6 +9,7 @@
   host = {
     feature = {
       virtualization = {
+        docker.enable = false;
         rke2 = {
           enable = true;
           cluster = {
@@ -19,7 +20,8 @@
           };
           advanced = {
             debug = false;
-            disable = [ "rke2-ingress-nginx" "rke2-traefik" ];
+            disable = [ "rke2-ingress-nginx" "rke2-traefik" "rke2-canal" ];
+            extraConfig = [ "--disable-kube-proxy" ];
             cisHardening = false;
             configPath = "/persist/etc/rke2/config.yaml";
             dataDir = "/persist/var/lib/rke2";
@@ -45,6 +47,9 @@
       networkd = {
         enable = true;
       };
+      routeTables = {
+        "vrack-pool" = 200;
+      };
       interfaces = {
         eno1 = {
           mac = "9c:6b:00:96:f6:7f";
@@ -56,12 +61,28 @@
             type = "static";
             addresses = [ "10.0.0.2/24" ];
           };
+          routes = [
+            {
+              Destination = "0.0.0.0/0";          # Default route
+              Gateway = "15.235.18.6";            # VRack gateway
+              Table = "vrack-pool";               # Custom routing table
+              OnLink = true;                      # Gateway is directly reachable
+            }
+          ];
+          routingPolicyRules = [
+            {
+              From = "15.235.18.0/29";            # Traffic from VRack subnet
+              Table = "vrack-pool";               # Use VRack routing table
+              Priority = 1000;                    # Rule priority
+            }
+          ];
         };
       };
       bridges = {
         public = {
           interfaces = [ "eno1" ];
           mac = "9c:6b:00:96:f6:7f";
+          arpAccept = true;
           ipv4 = {
             enable = true;
             type = "static";
@@ -90,5 +111,10 @@
       sam.enable = true;
     };
   };
-  networking.firewall.enable = false;
+  networking.firewall = {
+    enable = false;
+    allowedTCPPorts = [ 80 443 30120 30110 30122 30130 40120 ];
+    allowedUDPPorts = [ 443 30120 30110 30122 30130 40120 ];
+    trustedInterfaces = [ "lo" "vrack" "zt+" "lxc+" "cilium+" "veth" ];
+  };
 }

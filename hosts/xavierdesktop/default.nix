@@ -86,6 +86,7 @@
           enable = true;
           networks = [
             "e5cd7a9e1cfbc9a8"
+            "dade4211855d3d51"
           ];
           port = 9993;
         };
