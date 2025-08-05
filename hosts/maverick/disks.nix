@@ -1,8 +1,12 @@
 let
   rawdisk1 = "/dev/nvme0n1";
   rawdisk2 = "/dev/nvme1n1";
+  rawdisk3 = "/dev/nvme2n1";
+  rawdisk4 = "/dev/nvme3n1";
   cryptdisk1 = "pool0_0";
   cryptdisk2 = "pool0_1";
+  cryptdisk3 = "pool1_0";
+  cryptdisk4 = "pool1_1";
 in {
   disko.devices = {
     disk = {
@@ -123,6 +127,59 @@ in {
                     "/var_log" = {
                       mountpoint = "/var/log";
                       mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+      ${rawdisk3} = {
+        device = "${rawdisk3}";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              label = "enc_" + "${cryptdisk3}";
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "${cryptdisk3}";
+                extraOpenArgs = [ "--allow-discards" ];
+                passwordFile = "/tmp/secret.key"; # Interactive
+              };
+            };
+          };
+        };
+      };
+      ${rawdisk4} = {
+        device = "${rawdisk4}";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              label = "enc_" + "${cryptdisk4}";
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "${cryptdisk4}";
+                extraOpenArgs = [ "--allow-discards" ];
+                passwordFile = "/tmp/secret.key"; # Interactive
+                content = {
+                  type = "btrfs";
+                  extraArgs = [
+                    "-f"
+                    "-m raid0 -d raid0"
+                    "/dev/mapper/${cryptdisk3}"
+                    "/dev/mapper/${cryptdisk4}"
+                  ];
+                  subvolumes = {
+                    "/storage" = {
+                      mountpoint = "/storage";
+                      mountOptions = [ "nodatasum" "nodatacow" "noatime" ];
                     };
                   };
                 };
