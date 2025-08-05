@@ -111,4 +111,7 @@
     };
   };
   networking.firewall.enable = false;
+  boot.kernel.sysctl = {
+    "vm.nr_hugepages" = "2048";
+  };
 }

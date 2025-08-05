@@ -48,7 +48,7 @@
         enable = true;
       };
       routeTables = {
-        "vrack-pool" = 200;
+        "vrack-pool" = 100;
       };
       interfaces = {
         eno1 = {
@@ -82,7 +82,6 @@
         public = {
           interfaces = [ "eno1" ];
           mac = "9c:6b:00:96:f6:7f";
-          arpAccept = true;
           ipv4 = {
             enable = true;
             type = "static";
@@ -116,5 +115,8 @@
     allowedTCPPorts = [ 80 443 30120 30110 30122 30130 40120 ];
     allowedUDPPorts = [ 443 30120 30110 30122 30130 40120 ];
     trustedInterfaces = [ "lo" "vrack" "zt+" "lxc+" "cilium+" "veth" ];
+  };
+  boot.kernel.sysctl = {
+    "vm.nr_hugepages" = "2048";
   };
 }

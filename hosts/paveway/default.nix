@@ -122,4 +122,7 @@
     allowedUDPPorts = [ 443 30120 30110 30122 30130 40120 ];
     trustedInterfaces = [ "lo" "vrack" "zt+" "lxc+" "cilium+" "veth" ];
   };
+  boot.kernel.sysctl = {
+    "vm.nr_hugepages" = "2048";
+  };
 }
