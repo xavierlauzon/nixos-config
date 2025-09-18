@@ -17,17 +17,10 @@
   };
 
   inputs = {
-    nixpkgs-24-11.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-24-11-small.url = "github:NixOS/nixpkgs/nixos-24.11-small";
     nixpkgs-25-05.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-25-05-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-
-    home-manager-24-11 = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-24-11";
-    };
     home-manager-25-05 = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-25-05";
@@ -36,7 +29,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
     nixos-modules = {
       #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
@@ -79,14 +71,6 @@
 
       # Supported nixpkgs versions
       supportedVersions = {
-        "24.11" = {
-          nixpkgs = inputs.nixpkgs-24-11;
-          home-manager = inputs.home-manager-24-11;
-        };
-        "24.11-small" = {
-          nixpkgs = inputs.nixpkgs-24-11-small;
-          home-manager = inputs.home-manager-24-11;
-        };
         "25.05" = {
           nixpkgs = inputs.nixpkgs-25-05;
           home-manager = inputs.home-manager-25-05;
@@ -215,7 +199,7 @@
 
         xavierdesktop = self.mkSystem {
           hostPath = ./hosts/xavierdesktop;
-          packages = "25.05";
+          packages = "unstable";
         };
 
         rescue = self.mkSystem {
