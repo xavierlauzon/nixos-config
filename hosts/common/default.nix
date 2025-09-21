@@ -27,9 +27,11 @@
       bash.enable = mkDefault true;
       bind.enable = mkDefault true;
       binutils.enable = mkDefault true;
+      comma.enable = mkDefault true;
       coreutils.enable = mkDefault true;
       curl.enable = mkDefault true;
       diceware.enable = mkDefault true;
+      direnv.enable = mkDefault true;
       dust.enable = mkDefault true;
       e2fsprogs.enable = mkDefault true;
       fzf.enable = mkDefault true;
@@ -41,6 +43,7 @@
       kitty.enable = mkDefault true;
       less.enable = mkDefault true;
       links.enable = mkDefault true;
+      liquidprompt.enable = mkDefault true;
       lsof.enable = mkDefault true;
       mtr.enable = mkDefault true;
       nano.enable = mkDefault true;
@@ -48,11 +51,14 @@
       openssl.enable = mkDefault true;
       pciutils.enable = mkDefault true;
       psmisc.enable = mkDefault true;
+      rclone.enable = mkDefault true;
+      ripgrep.enable = mkDefault true;
       rsync.enable = mkDefault true;
       strace.enable = mkDefault true;
       tmux.enable = mkDefault true;
       tree.enable = mkDefault true;
       wget.enable = mkDefault true;
+      zoxide.enable = mkDefault true;
     };
     feature = {
       home-manager.enable = mkDefault true;
