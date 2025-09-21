@@ -29,6 +29,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-modules = {
       #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
@@ -41,8 +45,8 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
+    herald = {
+      url = "github:nfrastack/herald";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
@@ -58,6 +62,10 @@
     };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    zeroplex = {
+      url = "github:nfrastack/zeroplex";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -194,7 +202,7 @@
 
         blackhawk = self.mkSystem {
           hostPath = ./hosts/blackhawk;
-          packages = "25.05";
+          packages = "unstable";
         };
 
         xavierdesktop = self.mkSystem {
