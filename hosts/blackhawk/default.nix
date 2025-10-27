@@ -13,6 +13,17 @@
         enable = false;
         logship = false;
         monitor = false;
+        ports = {
+            http = {
+              enable = true;
+            };
+            https = {
+              enable = true;
+            };
+            http3 = {
+              enable = true;
+            };
+        };
       };
       traefik-internal = {
         enable = true;
