@@ -60,8 +60,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+    };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    minecraft-plymouth-theme = {
+      url = "github:nikp123/minecraft-plymouth-theme";
+    };
     zeroplex = {
       url = "github:nfrastack/zeroplex";
       inputs.nixpkgs.follows = "nixpkgs";
