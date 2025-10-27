@@ -107,4 +107,6 @@
   };
   networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
   nixpkgs.hostPlatform = "x86_64-linux";
+  programs.nix-ld.enable = true;
+  programs.nix-ld.package = pkgs.nix-ld-rs;
 }
