@@ -10,7 +10,7 @@
     container = {
       socket-proxy.enable = true;
       traefik = {
-        enable = false;
+        enable = true;
         logship = false;
         monitor = false;
         ports = {
@@ -97,6 +97,47 @@
     };
     role = "server";
     service = {
+      herald = {
+        enable = true;
+        api = {
+          enabled = true;
+          port = 4753;
+          listen = [ "zt*" ];
+        };
+        domains = {
+          domain01 = {
+            profiles = {
+              inputs = [ "docker_pub" ];
+              outputs = [ "cf" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+          domain02 = {
+            profiles = {
+              inputs = lib.mkForce [ "docker_int" "zerotier_network" ];
+              outputs = [ "api" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+        };
+        outputs = {
+          api_aggregate = {
+            type = "dns";
+            provider = "powerdns";
+            api_host = "http://172.19.129.3:8081/api/v1";
+            tls = {
+              skip_verify = "false";
+            };
+            log_level = "verbose";
+          };
+        };
+      };
       vscode_server.enable = true;
     };
     user = {

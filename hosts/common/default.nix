@@ -65,10 +65,94 @@
       secrets.enable = mkDefault true;
     };
     network.dns = {
-      domain = mkDefault "xavierlauzon.com";
-      search = mkDefault [ "xavierlauzon.com" ];
+      domain = mkDefault "lauzon.xyz";
+      search = mkDefault [ "lauzon.xyz" ];
     };
     service = {
+      herald = {
+        general = {
+          log_level = mkDefault "verbose";
+        };
+        inputs = {
+          docker_pub = mkDefault {
+            type = "docker";
+            api_url = "unix:///var/run/docker.sock";
+            expose_containers = true;
+            process_existing = true;
+            record_remove_on_stop = true;
+            filter = [
+              {
+                type = "label";
+                conditions = [
+                  {
+                    key = "traefik.proxy.visibility";
+                    value = "public";
+                  }
+                  {
+                    key = "traefik.proxy.visibility";
+                    value = "any";
+                    logic = "or";
+                  }
+                ];
+              }
+            ];
+          };
+          docker_int = mkDefault {
+            type = "docker";
+            api_url = "unix:///var/run/docker.sock";
+            expose_containers = true;
+            process_existing = true;
+            record_remove_on_stop = true;
+            filter = [
+              {
+                type = "label";
+                conditions = [
+                  {
+                    key = "traefik.proxy.visibility";
+                    value = "internal";
+                  }
+                  {
+                    key = "traefik.proxy.visibility";
+                    value = "any";
+                    logic = "or";
+                  }
+                ];
+              }
+            ];
+          };
+        };
+        domains = {
+          domain01 = mkDefault {
+            profiles = {
+              inputs = [ "docker_pub" ];
+              outputs = [ "cf" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+          domain02 = mkDefault {
+            profiles = {
+              inputs = [ "docker_int" ];
+              outputs = [ "api" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+        };
+        outputs = {
+          cf = {
+            type = "dns";
+            provider = "cloudflare";
+          };
+          api = {
+            type = "remote";
+          };
+        };
+      };
       logrotate = {
         enable = mkDefault true;
       };
