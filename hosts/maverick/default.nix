@@ -110,7 +110,48 @@
       sam.enable = true;
     };
   };
-  networking.firewall.enable = false;
+  #networking.firewall = {
+  #  enable = true;
+  #  allowedTCPPorts = [ 80 443 30120 30110 30122 30130 40120 ];
+  #  allowedUDPPorts = [ 443 30120 30110 30122 30130 40120 ];
+  #  trustedInterfaces = [ "lo" "vrack" "zt+" "lxc+" "cilium+" "veth+" ];
+  #};
+  networking = {
+    firewall.enable = false;
+    nftables = {
+      enable = true;
+      tables = {
+        filter = {
+          family = "inet";
+          content = ''
+            chain input {
+              type filter hook input priority filter; policy drop;
+
+              # Allow loopback
+              iifname "lo" accept
+
+              # Allow ALL RFC1918 traffic
+              ip saddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 } accept
+              ip6 saddr { fc00::/7, fe80::/10 } accept
+
+              # Allow established connections
+              ct state { established, related } accept
+
+              # Allow specific ports on public interface only
+              iifname "public" tcp dport { 80, 443, 9993, 9994, 30120, 30110, 30122, 30130, 40120 } accept
+              iifname "public" udp dport { 443, 9993, 9994, 30120, 30110, 30122, 30130, 40120 } accept
+
+              # Trust all non-public interfaces completely
+              iifname != "public" accept
+
+              # Log and drop everything else
+              counter drop
+            }
+          '';
+        };
+      };
+    };
+  };
   boot.kernel.sysctl = {
     "vm.nr_hugepages" = "2048";
   };
