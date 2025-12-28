@@ -73,7 +73,6 @@
       bridges = {
         public = {
           interfaces = [ "eno1" ];
-          mac = "9c:6b:00:96:f8:64";
           ipv4 = {
             enable = true;
             type = "static";
@@ -86,6 +85,7 @@
         zerotier = {
           enable = true;
           networks = [
+            "743993800f23a70e"
             "e5cd7a9e1cfbc9a8"
           ];
           port = 9993;
@@ -149,5 +149,5 @@
   networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
   nixpkgs.hostPlatform = "x86_64-linux";
   programs.nix-ld.enable = true;
-  programs.nix-ld.package = pkgs.nix-ld-rs;
+  programs.nix-ld.package = pkgs.nix-ld;
 }
