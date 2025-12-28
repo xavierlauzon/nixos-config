@@ -79,7 +79,7 @@
             api_url = "unix:///var/run/docker.sock";
             expose_containers = true;
             process_existing = true;
-            record_remove_on_stop = true;
+            record_remove_on_stop = false;
             filter = [
               {
                 type = "label";
@@ -102,7 +102,7 @@
             api_url = "unix:///var/run/docker.sock";
             expose_containers = true;
             process_existing = true;
-            record_remove_on_stop = true;
+            record_remove_on_stop = false;
             filter = [
               {
                 type = "label";
