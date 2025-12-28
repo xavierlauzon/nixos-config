@@ -17,10 +17,16 @@
   };
 
   inputs = {
+    nixpkgs-25-11.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-25-11-small.url = "github:NixOS/nixpkgs/nixos-25.11-small";
     nixpkgs-25-05.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-25-05-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    home-manager-25-11 = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-25-11";
+    };
     home-manager-25-05 = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-25-05";
@@ -84,14 +90,6 @@
 
       # Supported nixpkgs versions
       supportedVersions = {
-        "25.05" = {
-          nixpkgs = inputs.nixpkgs-25-05;
-          home-manager = inputs.home-manager-25-05;
-        };
-        "25.05-small" = {
-          nixpkgs = inputs.nixpkgs-25-05-small;
-          home-manager = inputs.home-manager-25-05;
-        };
         unstable = {
           nixpkgs = inputs.nixpkgs-unstable;
           home-manager = inputs.home-manager-unstable;
@@ -99,6 +97,22 @@
         "unstable-small" = {
           nixpkgs = inputs.nixpkgs-unstable-small;
           home-manager = inputs.home-manager-unstable;
+        };
+        "25.11" = {
+          nixpkgs = inputs.nixpkgs-25-11;
+          home-manager = inputs.home-manager-25-11;
+        };
+        "25.11-small" = {
+          nixpkgs = inputs.nixpkgs-25-11-small;
+          home-manager = inputs.home-manager-25-11;
+        };
+        "25.05" = { #TODO Remove 2025-12-31
+          nixpkgs = inputs.nixpkgs-25-05;
+          home-manager = inputs.home-manager-25-05;
+        };
+        "25.05-small" = { #TODO Remove 2025-12-31
+          nixpkgs = inputs.nixpkgs-25-05-small;
+          home-manager = inputs.home-manager-25-05;
         };
       };
 
@@ -187,17 +201,17 @@
       nixosConfigurations = {
         hellfire = self.mkSystem {
           hostPath = ./hosts/hellfire;
-          packages = "unstable";
+          packages = "25.11";
         };
 
         maverick = self.mkSystem {
           hostPath = ./hosts/maverick;
-          packages = "unstable";
+          packages = "25.11";
         };
 
         paveway = self.mkSystem {
           hostPath = ./hosts/paveway;
-          packages = "unstable";
+          packages = "25.11";
         };
 
         falcon = self.mkSystem {
@@ -207,7 +221,12 @@
 
         blackhawk = self.mkSystem {
           hostPath = ./hosts/blackhawk;
-          packages = "unstable";
+          packages = "25.11";
+        };
+
+        spectre = self.mkSystem {
+          hostPath = ./hosts/spectre;
+          packages = "25.11";
         };
 
         xavierdesktop = self.mkSystem {
