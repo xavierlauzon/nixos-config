@@ -1,9 +1,7 @@
 let
   rawdisk1 = "/dev/nvme0n1";
-  rawdisk2 = "/dev/nvme3n1";
-  cryptdisk1 = "pool0_0";
-  cryptdisk2 = "pool0_1";
-in {
+in
+{
   disko.devices = {
     disk = {
       ${rawdisk1} = {
@@ -25,52 +23,23 @@ in {
             };
             swap = {
               label = "swap";
-              size = "64G"; # SWAP - Do not Delete this comment
+              size = "32G"; # SWAP - Do not Delete this comment
               content = {
                 type = "swap";
                 resumeDevice = true;
               };
             };
             luks = {
-              label = "enc_" + "${cryptdisk1}";
+              label = "encrypted" ;
               size = "100%";
               content = {
                 type = "luks";
-                name = "${cryptdisk1}";
+                name = "pool0_0";
                 extraOpenArgs = [ "--allow-discards" ];
                 passwordFile = "/tmp/secret.key"; # Interactive
-              };
-            };
-          };
-        };
-      };
-      ${rawdisk2} = {
-        device = "${rawdisk2}";
-        type = "disk";
-        content = {
-          type = "gpt";
-          partitions = {
-            luks = {
-              label = "enc_" + "${cryptdisk2}";
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "${cryptdisk2}";
-                extraOpenArgs = [ "--allow-discards" ];
-                # if you want to use the key for interactive login be sure there is no trailing newline
-                # for example use `echo -n "password" > /tmp/secret.key`
-                passwordFile = "/tmp/secret.key"; # Interactive
-                # or file based
-                #settings.keyFile = "/tmp/secret.key";
-                #additionalKeyFiles = ["/tmp/additionalSecret.key"];
                 content = {
                   type = "btrfs";
-                  extraArgs = [
-                    "-f"
-                    "-m raid1 -d raid1"
-                    "/dev/mapper/${cryptdisk1}"
-                    "/dev/mapper/${cryptdisk2}"
-                  ];
+                  extraArgs = [ "-f" ];
                   subvolumes = {
                     "/root" = {
                       mountpoint = "/";
@@ -120,9 +89,13 @@ in {
                       mountpoint = "/var/local/.snapshots";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
+                    "/var_local_db" = {
+                      mountpoint = "/var/local/db";
+                      mountOptions = [ "noatime" "nodatacow" ];
+                    };
                     "/var_log" = {
                       mountpoint = "/var/log";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [ "compress=zstd" "noatime" "nodatacow" ];
                     };
                   };
                 };

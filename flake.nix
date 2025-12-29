@@ -216,7 +216,7 @@
 
         falcon = self.mkSystem {
           hostPath = ./hosts/falcon;
-          packages = "25.05";
+          packages = "25.11";
         };
 
         blackhawk = self.mkSystem {

@@ -18,7 +18,7 @@
     };
     hardware = {
       cpu = "amd";
-      raid.enable = true;                      # This line can be removed if not needed as it is already default set by the role template
+      raid.enable = false;
     };
     network = {
       dns = {
@@ -31,18 +31,17 @@
         enable = true;
       };
       interfaces = {
-        enp65s0f1 = {
-          mac = "fc:34:97:b0:bb:9a";
+        eno1pn0 = {
+          mac = "7c:c2:55:e3:dc:6f";
         };
       };
       bridges = {
         public = {
-          interfaces = [ "enp65s0f1" ];
-          mac = "fc:34:97:b0:bb:9a";
+          interfaces = [ "eno1pn0" ];
           ipv4 = {
             enable = true;
             type = "static";
-            addresses = [ "192.168.0.118/22" ];
+            addresses = [ "192.168.1.172/22" ];
             gateway = "192.168.0.1";
           };
         };

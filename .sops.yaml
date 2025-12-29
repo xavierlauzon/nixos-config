@@ -2,11 +2,11 @@ keys:
   - &user_xavier age1c68qgdn67fm244dzevutpz7kxy0g7dds2kdd5pcmxguv9yfyvqsqvj5h8y
   - &host_xavierdesktop age1ca3msprfg6cesmg05q5hpak2tazhelv47etz76mkmh9yssatlyuq6uwnwu
   - &host_blackhawk age1kvu5jrrveq6f4j8df2auh532sxd6u7nj7xeajd4ljfl63990k4qs9gz8eu
-  - &host_falcon age1m9asw63daavqdyyh8swzwx3rr8qhdqzrejqeksqnx0n7gjj8u3zq9u6hmu
   - &host_paveway age1vd88pck6wgd753zaxsqpdzt23uhq0zd5scqa0rl9ldtzagny4q8syv0wuc
   - &host_maverick age1cch783ppvh9mgjedwrz75qtrlk7c6fufguwewdhjqw6vk94f5v2qq4dswf
   - &host_hellfire age1x0gdk9hrjjy7vmjz6589rhc4gphy3e9gnm4u7pc8jrj69h94x5dsz3nxzt
   - &host_spectre age1f3hgrwc9m4rzw785f5fv2d70q3jz46x7w3g9z36dndr8qzhjqyzsvdcp6y
+  - &host_falcon age1slhh8hpj9xvtt0as8rzdv4acl0j0e8euexfk4aewt53qxs2fuq9sfegv0a
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
@@ -14,22 +14,22 @@ creation_rules:
           - *user_xavier
           - *host_xavierdesktop
           - *host_blackhawk
-          - *host_falcon
           - *host_paveway
           - *host_maverick
           - *host_hellfire
           - *host_spectre
+          - *host_falcon
   - path_regex: users/secrets.yaml
     key_groups:
       - age:
           - *user_xavier
           - *host_xavierdesktop
           - *host_blackhawk
-          - *host_falcon
           - *host_paveway
           - *host_maverick
           - *host_hellfire
           - *host_spectre
+          - *host_falcon
   - path_regex: hosts/xavierdesktop/secrets/.*
     key_groups:
       - age:
@@ -39,12 +39,6 @@ creation_rules:
     key_groups:
       - age:
           - *host_blackhawk
-          - *host_xavierdesktop
-          - *user_xavier
-  - path_regex: hosts/falcon/secrets/.*
-    key_groups:
-      - age:
-          - *host_falcon
           - *host_xavierdesktop
           - *user_xavier
   - path_regex: hosts/paveway/secrets/.*
@@ -69,5 +63,13 @@ creation_rules:
     key_groups:
       - age:
           - *host_spectre
+          - *host_xavierdesktop
+          - *user_xavier
+  - path_regex: hosts/falcon/secrets/.*
+    key_groups:
+      - age:
+          - *host_falcon
+          - *host_xavierdesktop
+          - *user_xavier
           - *host_xavierdesktop
           - *user_xavier
