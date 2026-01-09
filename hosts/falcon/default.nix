@@ -7,17 +7,60 @@
   ];
 
   host = {
+    container = {
+      socket-proxy = {
+        enable = true;
+        logship = false;
+        monitor = false;
+      };
+      traefik = {
+        enable = true;
+        logship = false;
+        monitor = false;
+        ports = {
+            http = {
+              enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
+            };
+            https = {
+              enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
+            };
+            http3 = {
+              enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
+            };
+        };
+      };
+      traefik-internal = {
+        enable = true;
+        logship = false;
+        monitor = false;
+        ports = {
+            http = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+            https = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+            http3 = {
+              enable = true;
+              zerotierNetwork = "e5cd7a9e1cfbc9a8";
+            };
+        };
+      };
+    };
     feature = {
     };
     filesystem = {
       encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
       impermanence.enable = true;               # This line can be removed if not needed as it is already default set by the role template
-      swap = {
-        partition = "disk/by-partlabel/swap";
-      };
     };
     hardware = {
       cpu = "amd";
+      gpu = "amd";
       raid.enable = false;
     };
     network = {
@@ -50,14 +93,15 @@
         zerotier = {
           enable = true;
           networks = [
+            "743993800f23a70e" # Lab
             "e5cd7a9e1cfbc9a8"
           ];
-          port = 9993;
         };
       };
     };
     role = "server";
     service = {
+      herald.enable = true;
       vscode_server.enable = true;
     };
     user = {
@@ -66,4 +110,11 @@
       sam.enable = true;
     };
   };
+  networking.firewall.trustedInterfaces = [ "br-+" "zt+" ];
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-label/bulk-storage";
+    fsType = "btrfs";
+    options = [ "subvol=data" "compress=zstd:1" "noatime" "space_cache=v2" "discard=async" ];
+  };
+   #new label for disk = "bulk-storage" uuid = "32ea10ca-089a-4eae-8851-4054689f1848"
 }
