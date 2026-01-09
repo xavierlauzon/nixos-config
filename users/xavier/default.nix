@@ -36,6 +36,7 @@ in
         "lp"
         "mysql"
         "network"
+        "render"
         "podman"
       ];
 

@@ -7,7 +7,7 @@ in
   options = {
     host.user.sam = {
       enable = mkOption {
-        default = true;
+        default = false;
         type = with types; bool;
         description = "Enable Sam";
       };
@@ -35,6 +35,7 @@ in
         "lp"
         "mysql"
         "network"
+        "render"
         "podman"
       ];
 
