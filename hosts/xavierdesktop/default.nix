@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ...}: {
+{ config, inputs, pkgs, lib, ...}: {
 
   imports = [
     inputs.disko.nixosModules.disko
@@ -36,16 +36,13 @@
       };
       virtualization = {
         flatpak.enable = true;
-        waydroid.enable = true;
+        waydroid.enable = false;
         rke2.enable = false;
       };
     };
     filesystem = {
       encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
       impermanence.enable = true;               # This line can be removed if not needed as it is already default set by the role template
-      swap = {
-        partition = "disk/by-partlabel/swap";
-      };
     };
     hardware = {
       cpu = "amd";
@@ -85,6 +82,7 @@
         zerotier = {
           enable = true;
           networks = [
+            "743993800f23a70e" # Lab
             "e5cd7a9e1cfbc9a8"
             "dade4211855d3d51"
           ];
@@ -96,8 +94,9 @@
     user = {
       root.enable = true;
       xavier.enable = true;
-      sam.enable = true;
     };
   };
   boot.extraModulePackages = with config.boot.kernelPackages; [ r8125 ];
+  programs.gnupg.agent.enableSSHSupport = lib.mkForce false;
+  hardware.amdgpu.overdrive.enable = true;
 }
