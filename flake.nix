@@ -35,10 +35,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    apple-silicon = {
-      url = "github:nix-community/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-modules = {
       #url = "github:xavierlauzon/nixos-modules";
       url = "path:/home/xavier/src/nixos-modules";
