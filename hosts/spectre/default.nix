@@ -50,9 +50,6 @@
     filesystem = {
       encryption.enable = true;                 # This line can be removed if not needed as it is already default set by the role template
       impermanence.enable = true;               # This line can be removed if not needed as it is already default set by the role template
-      swap = {
-        partition = "disk/by-partlabel/swap";
-      };
     };
     hardware = {
       cpu = "amd";
@@ -93,7 +90,6 @@
             "743993800f23a70e" # Lab
             "e5cd7a9e1cfbc9a8"
           ];
-          port = 9993;
         };
       };
       firewall = {
@@ -111,8 +107,7 @@
       sam.enable = true;
     };
   };
-  networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
-  nixpkgs.hostPlatform = "x86_64-linux";
+  networking.firewall.trustedInterfaces = [ "br-+" "zt+" ];
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/2ca5d88d-9775-4ed5-b6aa-ab26b4e086dd";
     fsType = "btrfs";
