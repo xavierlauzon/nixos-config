@@ -59,7 +59,7 @@
       dns = {
         enable = true;
         servers = [ "127.0.0.1" ];
-        stub = false;
+        stub = true;
         hostname = "blackhawk";
       };
       networkd = {
@@ -82,6 +82,15 @@
         };
       };
       vpn = {
+        #netbird = {
+        #  enable = true;
+        #  managementUrl = "https://netbird.lauzon.xyz:443";
+        #  useRoutingFeatures = "both";
+        #  tunnels = {
+        #    lab = {
+        #    };
+        #  };
+        #};
         zerotier = {
           enable = true;
           networks = [
@@ -99,6 +108,9 @@
     service = {
       herald = {
         enable = true;
+        general = {
+          log_level = "info";
+        };
         api = {
           enabled = true;
           port = 4753;
