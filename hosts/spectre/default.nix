@@ -8,25 +8,41 @@
 
   host = {
     container = {
-      socket-proxy.enable = true;
+      socket-proxy = {
+        enable = true;
+        image = {
+          update = true;
+        };
+        logship = false;
+        monitor = false;
+      };
       traefik = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {
             http = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
             https = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
             http3 = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
         };
       };
       traefik-internal = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {
@@ -53,7 +69,7 @@
     };
     hardware = {
       cpu = "amd";
-      gpu = "amd";
+      gpu.type = "amd";
       raid.enable = true;
     };
     network = {
@@ -68,13 +84,13 @@
       };
       interfaces = {
         eno1 = {
-          mac = "38:05:25:32:5c:d0";
+          mac = "38:05:25:37:3c:91";
         };
       };
       bridges = {
         public = {
           interfaces = [ "eno1" ];
-          mac = "38:05:25:32:5c:d0";
+          mac = "38:05:25:37:3c:91";
           ipv4 = {
             enable = true;
             type = "static";
@@ -113,4 +129,5 @@
     fsType = "btrfs";
     options = [ "subvol=data" "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" ];
   };
+  boot.kernelParams = [ "amd_iommu=pgtbl_v2" ]; # Remove in kernel 7.0
 }

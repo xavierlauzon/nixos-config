@@ -8,25 +8,41 @@
 
   host = {
     container = {
-      socket-proxy.enable = true;
+      socket-proxy = {
+        enable = true;
+        image = {
+          update = true;
+        };
+        logship = false;
+        monitor = false;
+      };
       traefik = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {
             http = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
             https = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
             http3 = {
               enable = true;
+              excludeInterfacePattern = "docker|veth|br-|zt";
             };
         };
       };
       traefik-internal = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {

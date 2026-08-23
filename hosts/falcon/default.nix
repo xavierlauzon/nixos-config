@@ -10,11 +10,17 @@
     container = {
       socket-proxy = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
       };
       traefik = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {
@@ -34,6 +40,9 @@
       };
       traefik-internal = {
         enable = true;
+        image = {
+          update = true;
+        };
         logship = false;
         monitor = false;
         ports = {
@@ -60,7 +69,7 @@
     };
     hardware = {
       cpu = "amd";
-      gpu = "amd";
+      gpu.type = "amd";
       raid.enable = false;
     };
     network = {
@@ -117,4 +126,5 @@
     options = [ "subvol=data" "compress=zstd:1" "noatime" "space_cache=v2" "discard=async" ];
   };
    #new label for disk = "bulk-storage" uuid = "32ea10ca-089a-4eae-8851-4054689f1848"
+  #boot.kernelParams = [ "amdgpu.runpm=0" "iommu=pt" "amdgpu.gpu_recovery=1" "amdgpu.lockup_timeout=0" ];
 }
