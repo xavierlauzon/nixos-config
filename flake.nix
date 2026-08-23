@@ -17,19 +17,13 @@
   };
 
   inputs = {
-    nixpkgs-25-11.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-25-11-small.url = "github:NixOS/nixpkgs/nixos-25.11-small";
-    nixpkgs-25-05.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-25-05-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    nixpkgs-26-05.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-26-05-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    home-manager-25-11 = {
-      url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-25-11";
-    };
-    home-manager-25-05 = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-25-05";
+    home-manager-26-05 = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-26-05";
     };
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
@@ -78,7 +72,7 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
-      lib = inputs.nixpkgs-25-05.lib;
+      lib = inputs.nixpkgs-26-05.lib;
       systems = [
         "aarch64-linux"
         "x86_64-linux"
@@ -94,21 +88,13 @@
           nixpkgs = inputs.nixpkgs-unstable-small;
           home-manager = inputs.home-manager-unstable;
         };
-        "25.11" = {
-          nixpkgs = inputs.nixpkgs-25-11;
-          home-manager = inputs.home-manager-25-11;
+        "26.05" = {
+          nixpkgs = inputs.nixpkgs-26-05;
+          home-manager = inputs.home-manager-26-05;
         };
-        "25.11-small" = {
-          nixpkgs = inputs.nixpkgs-25-11-small;
-          home-manager = inputs.home-manager-25-11;
-        };
-        "25.05" = { #TODO Remove 2025-12-31
-          nixpkgs = inputs.nixpkgs-25-05;
-          home-manager = inputs.home-manager-25-05;
-        };
-        "25.05-small" = { #TODO Remove 2025-12-31
-          nixpkgs = inputs.nixpkgs-25-05-small;
-          home-manager = inputs.home-manager-25-05;
+        "26.05-small" = {
+          nixpkgs = inputs.nixpkgs-26-05-small;
+          home-manager = inputs.home-manager-26-05;
         };
       };
 
@@ -146,7 +132,7 @@
       };};
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
 
-      mkSystem = { hostPath, packages ? "25.05", system ? "x86_64-linux", extraModules ? [] }:
+      mkSystem = { hostPath, packages ? "26.05", system ? "x86_64-linux", extraModules ? [] }:
         let
           # nixpkgs mapping from supportedVersions
           nixpkgsMapping = lib.mapAttrs (name: version: version.nixpkgs) supportedVersions;
@@ -195,47 +181,30 @@
         };
 
       nixosConfigurations = {
-        hellfire = self.mkSystem {
-          hostPath = ./hosts/hellfire;
-          packages = "25.11";
-        };
-
-        maverick = self.mkSystem {
-          hostPath = ./hosts/maverick;
-          packages = "25.11";
-        };
-
-        paveway = self.mkSystem {
-          hostPath = ./hosts/paveway;
-          packages = "25.11";
-        };
-
         falcon = self.mkSystem {
           hostPath = ./hosts/falcon;
-          packages = "25.11";
+          packages = "26.05";
         };
 
         blackhawk = self.mkSystem {
           hostPath = ./hosts/blackhawk;
-          packages = "25.11";
+          packages = "26.05";
         };
 
         spectre = self.mkSystem {
           hostPath = ./hosts/spectre;
-          packages = "25.11";
+          packages = "26.05";
         };
+
+        #walleye = self.mkSystem {
+        #  hostPath = ./hosts/walleye;
+        #  packages = "unstable";
+        #};
 
         xavierdesktop = self.mkSystem {
           hostPath = ./hosts/xavierdesktop;
           packages = "unstable";
         };
-
-        rescue = self.mkSystem {
-          hostPath = ./hosts/rescue;
-          packages = "25.05";
-          system = "x86_64-linux";
-        };
-
       };
 
       profiles = lib.mkOption {
