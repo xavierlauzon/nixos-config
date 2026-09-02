@@ -7,6 +7,7 @@ keys:
   - &host_hellfire age1x0gdk9hrjjy7vmjz6589rhc4gphy3e9gnm4u7pc8jrj69h94x5dsz3nxzt
   - &host_spectre age1f3hgrwc9m4rzw785f5fv2d70q3jz46x7w3g9z36dndr8qzhjqyzsvdcp6y
   - &host_falcon age1slhh8hpj9xvtt0as8rzdv4acl0j0e8euexfk4aewt53qxs2fuq9sfegv0a
+  - &host_raptor age1zyns4p0f5ha88a35v82n437jamwg5ga9hd900ktrscuya3ulrguqspnhn5
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
@@ -19,6 +20,7 @@ creation_rules:
           - *host_hellfire
           - *host_spectre
           - *host_falcon
+          - *host_raptor
   - path_regex: users/secrets.yaml
     key_groups:
       - age:
@@ -30,6 +32,7 @@ creation_rules:
           - *host_hellfire
           - *host_spectre
           - *host_falcon
+          - *host_raptor
   - path_regex: hosts/xavierdesktop/secrets/.*
     key_groups:
       - age:
@@ -71,5 +74,11 @@ creation_rules:
           - *host_falcon
           - *host_xavierdesktop
           - *user_xavier
+          - *host_xavierdesktop
+          - *user_xavier
+  - path_regex: hosts/raptor/secrets/.*
+    key_groups:
+      - age:
+          - *host_raptor
           - *host_xavierdesktop
           - *user_xavier

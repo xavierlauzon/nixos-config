@@ -183,7 +183,7 @@
       nixosConfigurations = {
         falcon = self.mkSystem {
           hostPath = ./hosts/falcon;
-          packages = "26.05";
+          packages = "unstable";
         };
 
         blackhawk = self.mkSystem {
@@ -194,6 +194,12 @@
         spectre = self.mkSystem {
           hostPath = ./hosts/spectre;
           packages = "26.05";
+        };
+
+        raptor = self.mkSystem {
+          hostPath = ./hosts/raptor;
+          packages = "unstable";
+          system = "aarch64-linux";
         };
 
         #walleye = self.mkSystem {
