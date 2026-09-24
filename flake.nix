@@ -202,6 +202,12 @@
           system = "aarch64-linux";
         };
 
+        trident = self.mkSystem {
+          hostPath = ./hosts/trident;
+          packages = "unstable";
+          system = "aarch64-linux";
+        };
+
         #walleye = self.mkSystem {
         #  hostPath = ./hosts/walleye;
         #  packages = "unstable";
