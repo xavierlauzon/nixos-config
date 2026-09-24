@@ -62,20 +62,21 @@
       };
     };
     feature = {
+      graphics = {
+        displayManager.manager = "greetd";
+        windowManager.manager = "hyprland";
+      };
     };
     filesystem = {
-#      swap = {
-#        partition = "disk/by-partlabel/swap";
-#      };
     };
     hardware = {
       cpu = "amd";
+      gpu.type = "amd";
     };
     network = {
       dns = {
         enable = true;
-        servers = [ "127.0.0.1" ];
-        stub = true;
+        servers = [ "192.168.2.5" ];
         hostname = "blackhawk";
       };
       networkd = {
@@ -98,73 +99,19 @@
         };
       };
       vpn = {
-        #netbird = {
-        #  enable = true;
-        #  managementUrl = "https://netbird.lauzon.xyz:443";
-        #  useRoutingFeatures = "both";
-        #  tunnels = {
-        #    lab = {
-        #    };
-        #  };
-        #};
         zerotier = {
           enable = true;
           networks = [
-            "743993800f23a70e"
+            "8d1c312afa3be618"
             "e5cd7a9e1cfbc9a8"
           ];
-          port = 9993;
         };
       };
-      firewall = {
-        opensnitch.enable = false;
-      };
     };
-    role = "server";
+    role = "desktop";
     service = {
       herald = {
         enable = true;
-        general = {
-          log_level = "info";
-        };
-        api = {
-          enabled = true;
-          port = 4753;
-          listen = [ "zt*" ];
-        };
-        domains = {
-          domain01 = {
-            profiles = {
-              inputs = [ "docker_pub" ];
-              outputs = [ "cf" ];
-            };
-            record = {
-              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
-              type = "CNAME";
-            };
-          };
-          domain02 = {
-            profiles = {
-              inputs = lib.mkForce [ "docker_int" "zerotier_network" ];
-              outputs = [ "api" ];
-            };
-            record = {
-              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
-              type = "CNAME";
-            };
-          };
-        };
-        outputs = {
-          api_aggregate = {
-            type = "dns";
-            provider = "powerdns";
-            api_host = "http://172.19.129.3:8081/api/v1";
-            tls = {
-              skip_verify = "false";
-            };
-            log_level = "verbose";
-          };
-        };
       };
       vscode_server.enable = true;
     };
@@ -175,7 +122,8 @@
     };
   };
   networking.firewall.trustedInterfaces = [ "br-+" "zt+" ]; # Temp fix allowing containers to query public IP of host
-  nixpkgs.hostPlatform = "x86_64-linux";
-  programs.nix-ld.enable = true;
-  programs.nix-ld.package = pkgs.nix-ld;
+  #programs.nix-ld.enable = true;
+  #programs.nix-ld.package = pkgs.nix-ld;
+  hardware.amdgpu.overdrive.enable = true;
+
 }
