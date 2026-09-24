@@ -75,7 +75,7 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "192.168.1.215" ];
+        servers = [ "192.168.2.5" ];
         stub = false;
         hostname = "falcon";
       };
@@ -102,7 +102,6 @@
         zerotier = {
           enable = true;
           networks = [
-            "743993800f23a70e" # Lab
             "e5cd7a9e1cfbc9a8"
           ];
         };

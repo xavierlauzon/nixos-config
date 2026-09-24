@@ -6,8 +6,6 @@
     ../common
   ];
 
-  system.stateVersion = "26.05";
-
   host = {
     container = {
       socket-proxy = {
@@ -78,7 +76,7 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "192.168.1.215" ];
+        servers = [ "192.168.2.5" ];
         stub = false;
         hostname = "raptor";
       };
@@ -121,11 +119,49 @@
       sam.enable = true;
     };
   };
-  networking.firewall.trustedInterfaces = [ "br-+" "zt+" ];
+  networking.firewall.trustedInterfaces = [ "br-+" "zt+" "eth0" "eth1" "eth2" "eth3" "eth4" ];
 
-  ## Testing
-  hardware.nvidia-container-toolkit.enable = true;
+  systemd.network.networks = {
+    "10-cx7-left1" = {
+      matchConfig.Name = "enp1s0f0np0";
+      address = [ "10.10.1.1/30" ];
+      linkConfig = {
+        MTUBytes = "9000";
+        RequiredForOnline = "no";
+      };
+      networkConfig.LinkLocalAddressing = "no";
+    };
+    "20-cx7-left2" = {
+      matchConfig.Name = "enP2p1s0f0np0";
+      address = [ "10.10.2.1/30" ];
+      linkConfig = {
+        MTUBytes = "9000";
+        RequiredForOnline = "no";
+      };
+      networkConfig.LinkLocalAddressing = "no";
+    };
+    "30-cx7-right1" = {
+      matchConfig.Name = "enp1s0f1np1";
+      address = [ "10.10.3.1/30" ];
+      linkConfig = {
+        MTUBytes = "9000";
+        RequiredForOnline = "no";
+      };
+      networkConfig.LinkLocalAddressing = "no";
+    };
+    "40-cx7-right2" = {
+      matchConfig.Name = "enP2p1s0f1np1";
+      address = [ "10.10.4.1/30" ];
+      linkConfig = {
+        MTUBytes = "9000";
+        RequiredForOnline = "no";
+      };
+      networkConfig.LinkLocalAddressing = "no";
+    };
+  };
 
+
+  # Cheating
   programs.nix-ld.enable = true;
   programs.nix-ld.package = pkgs.nix-ld;
 }
