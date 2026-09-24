@@ -8,6 +8,26 @@
 
   host = {
     container = {
+      #coredns = {
+      #  enable = true;
+      #  image = {
+      #    update = true;
+      #  };
+      #  logship = false;
+      #  monitor = false;
+      #  ports = {
+      #    tcp = {
+      #      enable = true;
+      #      method = "address";
+      #      address = "0.0.0.0";
+      #    };
+      #    udp = {
+      #      enable = true;
+      #      method = "address";
+      #      address = "0.0.0.0";
+      #    };
+      #  };
+      #};
       socket-proxy = {
         enable = true;
         image = {
@@ -75,7 +95,7 @@
     network = {
       dns = {
         enable = true;
-        servers = [ "192.168.1.215" ];
+        servers = [ "127.0.0.1" "9.9.9.9" ];
         stub = false;
         hostname = "spectre";
       };
@@ -103,7 +123,6 @@
         zerotier = {
           enable = true;
           networks = [
-            "743993800f23a70e" # Lab
             "e5cd7a9e1cfbc9a8"
           ];
         };
@@ -114,7 +133,69 @@
     };
     role = "server";
     service = {
-      herald.enable = true;
+      herald = {
+        enable = true;
+        general = {
+          log_level = "info";
+        };
+        api = {
+          enabled = true;
+          port = 4753;
+          listen = [ "zt*" ];
+        };
+        domains = {
+          domain01 = {
+            profiles = {
+              inputs = [ "docker_pub" ];
+              outputs = [ "cf" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+          domain02 = {
+            profiles = {
+              inputs = lib.mkForce [ "docker_int" "zerotier_network" ];
+              outputs = [ "api" ];
+            };
+            record = {
+              target = "${config.host.network.dns.hostname}.${config.host.network.dns.domain}";
+              type = "CNAME";
+            };
+          };
+        };
+        outputs = {
+          #api_aggregate = {
+          #  type = "file";
+          #  format = "zone";
+          #  path = "/var/local/data/_system/coredns/data/%domain%.zone";
+          #  default_ttl = 120;
+          #  ns_records = [
+          #    "aragorn.ns.cloudflare.com"
+          #    "ruth.ns.cloudflare.com"
+          #  ];
+          #  soa = {
+          #    primary_ns = "aragorn.ns.cloudflare.com";
+          #    admin_email = "admin@%domain%";
+          #    serial = "auto";
+          #    refresh = 3600;
+          #    retry = 900;
+          #    expire = 604800;
+          #    minimum = 300;
+          #  };
+          #};
+          api_aggregate = {
+            type = "dns";
+            provider = "powerdns";
+            api_host = "http://172.19.129.3:8081/api/v1";
+            tls = {
+              skip_verify = "false";
+            };
+            log_level = "verbose";
+          };
+        };
+      };
       vscode_server.enable = true;
     };
     user = {
