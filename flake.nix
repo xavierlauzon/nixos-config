@@ -188,13 +188,18 @@
 
         blackhawk = self.mkSystem {
           hostPath = ./hosts/blackhawk;
-          packages = "26.05";
+          packages = "unstable";
         };
 
         spectre = self.mkSystem {
           hostPath = ./hosts/spectre;
-          packages = "26.05";
+          packages = "unstable";
         };
+
+        #harpoon = self.mkSystem {
+        #  hostPath = ./hosts/harpoon;
+        #  packages = "26.05";
+        #};
 
         raptor = self.mkSystem {
           hostPath = ./hosts/raptor;
