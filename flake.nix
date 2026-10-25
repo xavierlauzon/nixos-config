@@ -196,11 +196,6 @@
           packages = "unstable";
         };
 
-        #harpoon = self.mkSystem {
-        #  hostPath = ./hosts/harpoon;
-        #  packages = "26.05";
-        #};
-
         raptor = self.mkSystem {
           hostPath = ./hosts/raptor;
           packages = "unstable";
@@ -212,11 +207,6 @@
           packages = "unstable";
           system = "aarch64-linux";
         };
-
-        #walleye = self.mkSystem {
-        #  hostPath = ./hosts/walleye;
-        #  packages = "unstable";
-        #};
 
         xavierdesktop = self.mkSystem {
           hostPath = ./hosts/xavierdesktop;
