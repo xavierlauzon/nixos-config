@@ -2032,6 +2032,10 @@ task_install_host() {
     ## Potential PR to the nixos-anywhere project to execute a "pre-hook" bash script before the installation process actually occurs.
     if var_true "${INSTALL_DEBUG}" ; then set -x ; fi
     sudo nix run github:nix-community/nixos-anywhere/${NIXOSANYWHERE_VERSION} -- \
+                                                --option require-sigs false \
+                                                --option trusted-users root \
+                                                --no-use-machine-substituters \
+                                                --build-on local \
                                                 --ssh-port ${SSH_PORT} ${feature_build_remote} ${feature_debug} ${feature_reboot} ${feature_ssh_key} \
                                                 ${feature_luks} \
                                                 --flake "${_dir_flake}"/#${deploy_host} \

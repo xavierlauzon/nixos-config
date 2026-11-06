@@ -34,7 +34,7 @@
       url = "path:/home/xavier/src/nixos-modules";
     };
     nix-networkd = {
-      #url = "github:xavierlauzon/nixos-modules";
+      #url = "github:xavierlauzon/nix-networkd";
       url = "path:/home/xavier/src/gh/nix-networkd";
     };
     disko = {
@@ -210,6 +210,11 @@
 
         xavierdesktop = self.mkSystem {
           hostPath = ./hosts/xavierdesktop;
+          packages = "unstable";
+        };
+
+        lightning = self.mkSystem {
+          hostPath = ./hosts/lightning;
           packages = "unstable";
         };
       };

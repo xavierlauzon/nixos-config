@@ -13,7 +13,6 @@
     kernel.sysctl = {
       "vm.dirty_ratio" = mkDefault 6;                   # sync disk when buffer reach 6% of memory
     };
-    #kernelPackages = mkDefault pkgs.linuxPackages_latest;
   };
 
   environment = {

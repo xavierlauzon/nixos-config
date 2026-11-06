@@ -6,6 +6,7 @@ keys:
   - &host_falcon age1slhh8hpj9xvtt0as8rzdv4acl0j0e8euexfk4aewt53qxs2fuq9sfegv0a
   - &host_raptor age1zyns4p0f5ha88a35v82n437jamwg5ga9hd900ktrscuya3ulrguqspnhn5
   - &host_trident age14mg909lpfa0ncsaf9qkpu6paelghyu5hlh3yvqnf0l5h289tnfts3edt4z
+  - &host_lightning age1740fh9qmyt8eqf527vnzud0wfvefqcq8e2z5jlltzlprww9jp9eqzqahz3
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
@@ -17,6 +18,7 @@ creation_rules:
           - *host_falcon
           - *host_raptor
           - *host_trident
+          - *host_lightning
   - path_regex: users/secrets.yaml
     key_groups:
       - age:
@@ -27,6 +29,7 @@ creation_rules:
           - *host_falcon
           - *host_raptor
           - *host_trident
+          - *host_lightning
   - path_regex: hosts/xavierdesktop/secrets/.*
     key_groups:
       - age:
@@ -60,5 +63,11 @@ creation_rules:
     key_groups:
       - age:
           - *host_trident
+          - *host_xavierdesktop
+          - *user_xavier
+  - path_regex: hosts/lightning/secrets/.*
+    key_groups:
+      - age:
+          - *host_lightning
           - *host_xavierdesktop
           - *user_xavier
