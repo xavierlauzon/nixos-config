@@ -1,5 +1,6 @@
 keys:
   - &user_xavier age1c68qgdn67fm244dzevutpz7kxy0g7dds2kdd5pcmxguv9yfyvqsqvj5h8y
+  - &user_sam age1c4e9fn93e6umkr6kh6ec208gjjeple4gdevghlrfxjtzu73phdwsh4a9aq
   - &host_xavierdesktop age1ca3msprfg6cesmg05q5hpak2tazhelv47etz76mkmh9yssatlyuq6uwnwu
   - &host_blackhawk age1kvu5jrrveq6f4j8df2auh532sxd6u7nj7xeajd4ljfl63990k4qs9gz8eu
   - &host_spectre age1f3hgrwc9m4rzw785f5fv2d70q3jz46x7w3g9z36dndr8qzhjqyzsvdcp6y
@@ -12,6 +13,7 @@ creation_rules:
     key_groups:
       - age:
           - *user_xavier
+          - *user_sam
           - *host_xavierdesktop
           - *host_blackhawk
           - *host_spectre
@@ -23,6 +25,7 @@ creation_rules:
     key_groups:
       - age:
           - *user_xavier
+          - *user_sam
           - *host_xavierdesktop
           - *host_blackhawk
           - *host_spectre
@@ -34,6 +37,7 @@ creation_rules:
     key_groups:
       - age:
           - *user_xavier
+          - *user_sam
           - *host_xavierdesktop
   - path_regex: hosts/blackhawk/secrets/.*
     key_groups:
@@ -41,33 +45,39 @@ creation_rules:
           - *host_blackhawk
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
   - path_regex: hosts/spectre/secrets/.*
     key_groups:
       - age:
           - *host_spectre
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
   - path_regex: hosts/falcon/secrets/.*
     key_groups:
       - age:
           - *host_falcon
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
   - path_regex: hosts/raptor/secrets/.*
     key_groups:
       - age:
           - *host_raptor
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
   - path_regex: hosts/trident/secrets/.*
     key_groups:
       - age:
           - *host_trident
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
   - path_regex: hosts/lightning/secrets/.*
     key_groups:
       - age:
           - *host_lightning
           - *host_xavierdesktop
           - *user_xavier
+          - *user_sam
