@@ -7,7 +7,7 @@ keys:
   - &host_falcon age1slhh8hpj9xvtt0as8rzdv4acl0j0e8euexfk4aewt53qxs2fuq9sfegv0a
   - &host_raptor age1zyns4p0f5ha88a35v82n437jamwg5ga9hd900ktrscuya3ulrguqspnhn5
   - &host_trident age14mg909lpfa0ncsaf9qkpu6paelghyu5hlh3yvqnf0l5h289tnfts3edt4z
-  - &host_lightning age1740fh9qmyt8eqf527vnzud0wfvefqcq8e2z5jlltzlprww9jp9eqzqahz3
+  - &host_lightning age1gmk5cpzjf82yh7zxsm4u02hxl734jengp7gylsvn4k5rh3am93gq6qy04y
 creation_rules:
   - path_regex: hosts/common/secrets/.*
     key_groups:
@@ -80,4 +80,3 @@ creation_rules:
           - *host_lightning
           - *host_xavierdesktop
           - *user_xavier
-          - *user_sam
